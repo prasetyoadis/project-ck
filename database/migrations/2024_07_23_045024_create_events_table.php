@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('username')->unique();
-            $table->string('password');
-            $table->enum('role', ['staff', 'kaadmin'])->default('staff');
-            $table->enum('isadmin', ['1', '0'])->default('0');
-            $table->rememberToken();
+            $table->integer('undangan_id');
+            $table->string('nama_acara');
+            $table->date('tgl_acara');
+            $table->string('lokasi');
+            $table->string('link_gmaps');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('events');
     }
 };
