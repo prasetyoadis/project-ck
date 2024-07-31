@@ -24,7 +24,7 @@ class UserController extends Controller
         if (Auth::attempt($formValid)) {
             $request->session()->regenerate();
             
-            if (auth()->user()->isadmin == "0") {
+            if (auth()->user()->iadmin == "0") {
                 Auth::logout();
 
                 $request->session()->invalidate();
