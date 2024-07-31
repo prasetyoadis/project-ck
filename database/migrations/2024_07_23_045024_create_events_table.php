@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->integer('undangan_id');
+            $table->foreignId('undangan_id');
             $table->string('nama_acara');
             $table->date('tgl_acara');
             $table->string('lokasi');
             $table->string('link_gmaps');
             $table->timestamps();
+
         });
     }
 

@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('payment', function (Blueprint $table) {
             $table->id();
-            $table->integer('order_id');
+            $table->foreignId('order_id');
             $table->date('tanggal_bayar');
             $table->string('bukti_bayar');
             $table->timestamps();
+
         });
     }
 

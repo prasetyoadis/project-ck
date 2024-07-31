@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('order', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('payment_id');
+            $table->foreignId('users_id');
             $table->string('nama_pemesan');
             $table->date('tgl_pemesanan');
             $table->enum('status', ['dp', 'lunas', 'batal'])->default('dp');
             $table->timestamps();
+
+
         });
     }
 

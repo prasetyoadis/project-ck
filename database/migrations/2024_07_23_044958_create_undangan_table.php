@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('undangan', function (Blueprint $table) {
             $table->id();
-            $table->integer('order_id');
-            $table->integer('cpria_id');
-            $table->integer('cwanita_id');
+            $table->foreignId('order_id');
+            $table->foreignId('cpria_id');
+            $table->foreignId('cwanita_id');
             $table->text('story');
             $table->string('song');
             $table->timestamps();
