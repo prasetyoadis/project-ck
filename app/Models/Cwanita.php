@@ -18,6 +18,6 @@ class Cwanita extends Model
     ];
 
     public function undangan() {
-        return $this->hasMany(Undangan::class);
+        return $this->belongsTo(Undangan::class);
     }
 }

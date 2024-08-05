@@ -22,11 +22,11 @@ class Undangan extends Model
     }
 
     public function cpria() {
-        return $this->belongsTo(Cpria::class);
+        return $this->hasOne(Cpria::class);
     }
 
     public function cwanita() {
-        return $this->belongsTo(Cwanita::class);
+        return $this->hasOne(Cwanita::class);
     }
 
     public function gallery() {
