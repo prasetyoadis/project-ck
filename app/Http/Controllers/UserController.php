@@ -9,7 +9,7 @@ class UserController extends Controller
 {
     //Menampilkan Halaman Login User Admin
     public function indexLogin(){
-        return view('dashboard.login', [
+        return view('dashboard.login-admin', [
             "title" => "Login Admin Undangan"
         ]);
     }
