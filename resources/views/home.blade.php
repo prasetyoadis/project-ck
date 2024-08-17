@@ -1,141 +1,187 @@
 @extends('layout/main')
+<style>
 
+  div.cover-image img{
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+  }
+  div.button-center{
+    position: absolute;
+    top: 50%;
+    left: 40%;
+  }
+  div.container-fluid{
+    background-color:	#FFF5EE;
+    position: absolute
+    top: 0;
+    left: 0;
+    padding-left: 4%;
+    padding-right: 4%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  button{
+    width: 150px;
+    height: 50px;
+    border: 3px solid burlywood;
+  }
+  h2{
+    text-align: center;
+    margin-top: 0; 
+  }
+  .card-title{
+    text-align: center;
+  }
+</style>
+
+<!---image--->
+<div class="cover-image">
+  <img src="img/akad1.jpeg">
+  <div class="button-center">
+    <h2>CeritaKita~</h2>
+      <a href="/"><button>Konsultasi</button></a>
+      <a href="/"><button>Pesan Sekarang</button></a>
+  </div>
+</div>
+<hr>
 @section('container')
-    <img src="img/weddingakad.jpeg" width="100%" height="500vh">
-    <hr>
-    <div class="row justify-content-center">
-        <h2 class="mb-3" style="text-align: center">Katalog</h2>
-        <div class="col-3">
-            <div class="card p-2" style="width: 18rem; height: 25rem;">
-              <img src="img/aaa.jpeg" class="card-img-top" width="50%" height="50%">
+    <div class="container-fluid">
+      <h2>Katalog</h2>
+        <div class="row">
+          <div class="col-md-3 mb-2 mt-2">
+            <div class="card">
+              <img src="https://via.placeholder.com/100" class="card-img-top" alt="...">
               <div class="card-body">
-                <h5 class="card-title">Flower Garden</h5>
+                <h5 class="card-title">Wedding Gereja</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-secondary">Lihat Tema</a>
-                <a href="#" class="btn btn-primary">Pesan Tema</a>
+                <a href="#" class="btn btn-primary">Lihat Tema</a>
+                <a href="#" class="btn btn-secondary">Pesan Tema</a>
               </div>
             </div>
-            </div>
-          <div class="col-3">
-          <div class="card p-2" style="width: 18rem; height: 25rem;">
-            <img src="img/blackwhite.jpeg" class="card-img-top" width="50%" height="50%">
-            <div class="card-body">
-              <h5 class="card-title">Hitam Putih</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-secondary">Lihat Tema</a>
-              <a href="#" class="btn btn-primary">Pesan Tema</a>
-            </div>
           </div>
-          </div>
-          <div class="col-3">
-          <div class="card p-2" style="width: 18rem; height: 25rem;">
-            <img src="img/wedding_gereja.jpeg" class="card-img-top" width="50%" height="50%">
-            <div class="card-body">
-              <h5 class="card-title">Pemberkatan Gereja</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-secondary">Lihat Tema</a>
-              <a href="#" class="btn btn-primary">Pesan Tema</a>
+          <div class="col-md-3 mb-2 mt-2">
+            <div class="card">
+              <img src="https://via.placeholder.com/100" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Wedding Akad</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="btn btn-primary">Lihat Tema</a>
+                <a href="#" class="btn btn-secondary">Pesan Tema</a>
+              </div>
             </div>
           </div>
-          </div>
-          <div class="col-3">
-          <div class="card p-2" style="width: 18rem; height: 25rem;">
-            <img src="img/weddingakad.jpeg" class="card-img-top" width="50%" height="50%">
-            <div class="card-body">
-              <h5 class="card-title">Akad Sederhana</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-secondary">Lihat Tema</a>
-              <a href="#" class="btn btn-primary">Pesan Tema</a>
-            </div>
-          </div>
-          </div>
-    </div>
-    <hr>
-    <div class="row m-2">
-        <h2 class="mb-3" style="text-align: center">Lihat Kata Mereka</h2>
-            <div class="col-4">
-                <div class="card" style="width: 25rem;">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                  </div>
-              </div>
-              <div class="col-4">
-                <div class="card" style="width: 25rem;">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                  </div>
-              </div>
-              <div class="col-4">
-                <div class="card" style="width: 25rem;">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                  </div>
+          <div class="col-md-3 mb-2 mt-2">
+            <div class="card">
+              <img src="https://via.placeholder.com/100" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Black & White</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="btn btn-primary">Lihat Tema</a>
+                <a href="#" class="btn btn-secondary">Pesan Tema</a>
               </div>
             </div>
-            <div class="row m-2">
-                    <div class="col-4">
-                        <div class="card" style="width: 25rem;">
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            </div>
-                          </div>
-                      </div>
-                      <div class="col-4">
-                        <div class="card" style="width: 25rem;">
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            </div>
-                          </div>
-                      </div>
-                      <div class="col-4">
-                        <div class="card" style="width: 25rem;">
-                            <div class="card-body">
-                              <h5 class="card-title">Card title</h5>
-                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            </div>
-                          </div>
-                      </div>
-                    </div>
-                    <hr>
-        <div class="row m-5">
-            <h2 class="mb-3" style="text-align: center">Ruang Baca</h2>
-              <div class="col-4">
-              <div class="card p-3" style="width: 18rem; height: 25rem;">
-                <img src="img/blackwhite.jpeg" class="card-img-top" width="50%" height="50%">
-                <div class="card-body">
-                  <h5 class="card-title" style="text-align: center">Judul Artikel 2</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
+          </div>
+          <div class="col-md-3 mb-2 mt-2">
+            <div class="card">
+              <img src="https://via.placeholder.com/100" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Bunga</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="btn btn-primary">Lihat Tema</a>
+                <a href="#" class="btn btn-secondary">Pesan Tema</a>
               </div>
-              </div>
-              <div class="col-4">
-              <div class="card p-2" style="width: 18rem; height: 25rem;">
-                <img src="img/wedding_gereja.jpeg" class="card-img-top" width="50%" height="50%">
-                <div class="card-body">
-                  <h5 class="card-title" style="text-align: center">Judul Artikel 2</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-              </div>
-              </div>
-              <div class="col-4">
-              <div class="card p-2" style="width: 18rem; height: 25rem;">
-                <img src="img/weddingakad.jpeg" class="card-img-top" width="50%" height="50%">
-                <div class="card-body">
-                  <h5 class="card-title" style="text-align: center">Judul Artikel 3</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  
-                </div>
-              </div>
-              </div>
+            </div>
+          </div>
         </div>
+        <hr>
+
+        <div class="row mt-4">
+          <h2>Kata Mereka</h2>
+          <div class="col-md-4 mb-2 mt-2">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Review 1</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-2 mt-2">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Review 2</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-2 mt-2">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Review 3</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-2 mt-2">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Review 4</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-2 mt-2">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Review 5</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-2 mt-2">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Review 6</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+
+        <div class="row">
+          <h2>Ruang Baca</h2>
+          <div class="col-md-4 mb-5 mt-4">
+            <div class="card">
+              <img src="https://via.placeholder.com/100" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Konsep Pernikahan</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-5 mt-4">
+            <div class="card">
+              <img src="https://via.placeholder.com/100" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Pernikahan dalam Katolik</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-5 mt-4">
+            <div class="card">
+              <img src="https://via.placeholder.com/100" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Pernikahan dalam Islam</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
 @endsection
 
 
