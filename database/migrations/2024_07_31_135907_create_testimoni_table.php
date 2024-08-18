@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('testimoni', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email');
+            $table->foreignId('order_id');
             $table->string('testimoni');
-            $table->string('rating');
+            $table->enum('rating', ['1', '2', '3', '4', '5']);
             $table->timestamps();
         });
     }

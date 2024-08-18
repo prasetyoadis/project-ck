@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('users_id');
             $table->string('nama_pemesan');
+            $table->string('email_pemesan');
+            $table->string('no_hp_pemesan');
             $table->date('tgl_pemesanan');
             $table->enum('status', ['dp', 'lunas', 'batal'])->default('dp');
             $table->timestamps();
