@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,3 +44,9 @@ Route::get('/testimoni', function () {
         "title" => "Testimoni"
     ]);
 });
+
+//Admin Login
+Route::get('/admin', [UserController::class, 'indexLogin'])
+    ->name('loginAdmin')
+    ->middleware('guest');
+Route::post('/admin', [UserController::class, 'adminLogin']);
