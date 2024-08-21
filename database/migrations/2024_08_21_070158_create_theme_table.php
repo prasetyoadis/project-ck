@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('template_undangan', function (Blueprint $table) {
+        Schema::create('theme', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_template');
-            $table->string('category');
+            $table->foreignId('category_id');
+            $table->string('theme');
             $table->enum('is_active', ['1', '0']);
             $table->timestamps();
         });
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('template_undangan');
+        Schema::dropIfExists('theme');
     }
 };
