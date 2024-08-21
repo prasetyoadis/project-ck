@@ -35,6 +35,6 @@ class Order extends Model
     }
 
     public function templateUndangan() {
-        return $this->hasOne(TemplateUndangan::class);
+        return $this->hasOne(Theme::class);
     }
 }
