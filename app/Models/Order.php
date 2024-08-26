@@ -12,6 +12,7 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'payment_id',
+        'template_undangan_id',
         'nama_client',
         'tanggal_order',
         'status_order',
@@ -27,5 +28,13 @@ class Order extends Model
 
     public function undangan() {
         return $this->hasOne(Undangan::class);
+    }
+
+    public function testimoni() {
+        return $this->belongsTo(Testimoni::class);
+    }
+
+    public function templateUndangan() {
+        return $this->hasOne(Theme::class);
     }
 }

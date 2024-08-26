@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('testimoni', function (Blueprint $table) {
+        Schema::create('theme', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id');
-            $table->string('testimoni');
-            $table->enum('rating', ['1', '2', '3', '4', '5']);
+            $table->foreignId('category_id');
+            $table->string('theme');
+            $table->enum('is_active', ['1', '0']);
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('testimoni');
+        Schema::dropIfExists('theme');
     }
 };
