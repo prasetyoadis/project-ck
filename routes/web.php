@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
-
 //Admin Login
 Route::get('/admin', [UserController::class, 'indexLogin'])
     ->name('login')
