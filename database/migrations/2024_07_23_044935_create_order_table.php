@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('order', function (Blueprint $table) {
             $table->id();
             $table->foreignId('users_id');
+            $table->foreignId('payment_id');
+            $table->foreignId('template_undangan_id');
             $table->string('nama_pemesan');
+            $table->string('email_pemesan');
+            $table->string('no_hp_pemesan');
             $table->date('tgl_pemesanan');
             $table->enum('status', ['dp', 'lunas', 'batal'])->default('dp');
             $table->timestamps();

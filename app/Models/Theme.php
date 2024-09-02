@@ -4,18 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Testimoni extends Model
+class Theme extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'testimoni',
-        'rating',
+        'theme',
+        'is_active',
     ];
 
     public function order() {
-        return $this->hasOne(Order::class);
+        return $this->belongsTo(Order::class);
+    }
+
+    public function category() {
+        return $this->belongsTo(Category::class);
     }
 }
