@@ -32,7 +32,7 @@ class UserController extends Controller
 
                 return back()->with('loginError', 'Status Admin non-Aktif!!');
             }
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('admin/dashboard');
             
         }
         return back()->with('loginError', 'Data login Salah!!');
@@ -44,6 +44,6 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/admin');
     }
 }

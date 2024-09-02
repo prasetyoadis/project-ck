@@ -47,6 +47,11 @@ Route::get('/testimoni', function () {
 
 //Admin Login
 Route::get('/admin', [UserController::class, 'indexLogin'])
-    ->name('loginAdmin')
+    ->name('login')
     ->middleware('guest');
 Route::post('/admin', [UserController::class, 'adminLogin']);
+Route::post('/logout', [UserController::class, 'adminLogout']);
+
+Route::get('admin/dashboard', function(){
+    return view('dashboard.admin.index');
+})->middleware(['auth']);

@@ -111,10 +111,13 @@
                                     <span class="position-absolute material-symbols-rounded" style="top: 7px; left:7px">account_box</span>
                                     <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" id="username" style="padding-left: 35px" placeholder="Username" required autofocus value="{{ old('username') }}">
                                 </div>
-                                <div class="position-relative mb-4">
+                                <div class="position-relative mb-2">
                                     <label for="password" class="form-label" hidden>Password</label>
                                     <span class="position-absolute material-symbols-rounded" style="top: 7px; left:7px">lock</span>
                                     <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" style="padding-left: 35px" placeholder="Password" required>
+                                </div>
+                                <div class="d-flex justify-content-end mb-2">
+                                    <a href="http://">Lupa Password?</a>
                                 </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary">Login</button>
