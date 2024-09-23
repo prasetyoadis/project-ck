@@ -44,7 +44,16 @@ Route::get('/testimoni', function () {
         "title" => "Testimoni"
     ]);
 });
-
+Route::get('/testimoni', function () {
+    return view('testimoni', [
+        "title" => "Testimoni"
+    ]);
+});
+Route::get('/akad-nikah', function () {
+    return view('/tema/pernikahan/akadnikah', [
+        "title" => "Axel & Michi"
+    ]);
+});
 //Admin Login
 Route::get('/admin', [UserController::class, 'indexLogin'])
     ->name('loginAdmin')
