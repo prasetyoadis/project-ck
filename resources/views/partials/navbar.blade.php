@@ -1,9 +1,3 @@
-<style>
-  nav{
-    opacity: 0.7;
-    background-color:	#FFF5EE;
-  }
-</style>
 
 <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
