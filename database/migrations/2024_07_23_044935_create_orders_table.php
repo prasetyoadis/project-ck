@@ -11,12 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payment', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id');
-            $table->date('tanggal_bayar');
-            $table->string('bukti_bayar');
+            $table->string('uuid')->unique();
+            $table->foreignId('user_id');
+            $table->string('nama');
+            $table->string('email');
+            $table->string('no_hp');
+            $table->date('tgl_order');
+            $table->enum('status', ['dp', 'lunas', 'batal'])->default('dp');
             $table->timestamps();
+
 
         });
     }
@@ -26,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payment');
+        Schema::dropIfExists('orders');
     }
 };

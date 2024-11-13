@@ -6,6 +6,7 @@
     height: 100vh;
     object-fit: cover;
   }
+
   div.button-center{
     position: absolute;
     top: 50%;

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -53,5 +54,14 @@ Route::post('/admin', [UserController::class, 'adminLogin']);
 Route::post('/logout', [UserController::class, 'adminLogout']);
 
 Route::get('admin/dashboard', function(){
-    return view('dashboard.admin.index');
+    return view('dashboard.admin.index', [
+        "title" => "Dashboard"
+    ]);
 })->middleware(['auth']);
+Route::get('admin/staff', function(){
+    return view('dashboard.admin.staf.index', [
+        "title" => "Staf"
+    ]);
+})->middleware(['auth']);
+Route::resource('admin/orders', OrderController::class)
+    ->middleware(['auth']);

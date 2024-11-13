@@ -9,14 +9,12 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'user_id',
-        'payment_id',
-        'template_undangan_id',
-        'nama_client',
-        'tanggal_order',
-        'status_order',
-    ];
+    protected $guarded = ['id'];
+
+    //Route Model Binding
+    public function getRouteKeyName(){
+        return 'uuid';
+    }
 
     public function user() {
         return $this->belongsTo(User::class);
