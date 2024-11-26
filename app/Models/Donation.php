@@ -9,14 +9,13 @@ class Donation extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'nama_pemilik',
-        'no_rek'
-    ];
-
-    protected $guarded = ['nama_pemilik', 'no_rek'];
+    protected $guarded = ['id'];
 
     public function bank() {
         return $this->hasMany(Bank::class);
+    }
+
+    public function undangan() {
+        return $this->belongsTo(Undangan::class);
     }
 }

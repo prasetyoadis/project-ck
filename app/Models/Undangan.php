@@ -40,4 +40,8 @@ class Undangan extends Model
     public function comment() {
         return $this->hasMany(Comment::class);
     }
+
+    public function donation() {
+        return $this->hasMany(Donation::class);
+    }
 }

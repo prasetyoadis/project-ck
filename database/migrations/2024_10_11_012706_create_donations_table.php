@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('donations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('banks_id');
+            $table->foreignId('bank_id');
+            $table->foreignId('undangan_id');
             $table->string('nama_pemilik');
             $table->unsignedInteger('no_rek');
             $table->timestamps();

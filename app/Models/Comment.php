@@ -9,10 +9,7 @@ class Comment extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'nama',
-        'ucapan'
-    ];
+    protected $guarded = ['id'];
 
     public function undangan() {
         return $this->belongsTo(Undangan::class);
