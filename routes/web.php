@@ -50,7 +50,7 @@ Route::get('/testimoni', function () {
     ]);
 });
 Route::get('/akad-nikah', function () {
-    return view('/tema/pernikahan/akadnikah', [
+    return view('/tema/pernikahan/akad-nikah', [
         "title" => "Axel & Michi"
     ]);
 });

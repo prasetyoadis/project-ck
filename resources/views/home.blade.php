@@ -2,7 +2,7 @@
 
 @section('container')
 <div class="cover-image">
-  <img src="img/wedding2.jpg">
+  <img src="assets/img/web-asset/wedding2.jpg">
   <div class="bg-shadow"></div>
   <div class="button-center">
     <h2>CeritaKita</h2>
@@ -16,7 +16,7 @@
         <div class="row mt-1">
           <div class="col-md-3 mb-1 mt-1">
             <div class="card">
-              <img src="/img/ring.jpeg" width="100" height="250" class="card-img-top" alt="...">
+              <img src="assets/img/web-asset/ring.jpeg" width="100" height="250" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title">Party Wedding</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -27,7 +27,7 @@
           </div>
           <div class="col-md-3 mb-2 mt-2">
             <div class="card">
-              <img src="/img/weddingakad.jpeg" width="100" height="250" class="card-img-top" alt="...">
+              <img src="assets/img/web-asset/weddingakad.jpeg" width="100" height="250" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title">Akad Nikah Sederhana</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -38,7 +38,7 @@
           </div>
           <div class="col-md-3 mb-2 mt-2">
             <div class="card">
-              <img src="/img/wedding_gereja.jpeg" width="100" height="250" class="card-img-top" alt="...">
+              <img src="assets/img/web-asset/wedding_gereja.jpeg" width="100" height="250" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title">Pemberkatan Gereja</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -49,7 +49,7 @@
           </div>
           <div class="col-md-3 mb-2 mt-2">
             <div class="card">
-              <img src="/img/adat-jawa2.jpeg" width="100" height="250" class="card-img-top" alt="...">
+              <img src="assets/img/web-asset/javanese.jpeg" width="100" height="250" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title">Adat Jawa</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -118,7 +118,7 @@
           <h2>Ruang Baca</h2>
           <div class="col-md-4 mb-5 mt-4">
             <div class="card">
-              <img src="/img/weddingakad.jpeg" width="100" height="400" class="card-img-top" alt="...">
+              <img src="assets/img/web-asset/javanese.jpeg" width="100" height="400" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title">Konsep Pernikahan</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -127,7 +127,7 @@
           </div>
           <div class="col-md-4 mb-5 mt-4">
             <div class="card">
-              <img src="/img/weddingakad.jpeg" width="100" height="400" class="card-img-top" alt="...">
+              <img src="assets/img/web-asset/javanese.jpeg" width="100" height="400" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title">Pernikahan dalam Katolik</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -136,7 +136,7 @@
           </div>
           <div class="col-md-4 mb-5 mt-4">
             <div class="card">
-              <img src="/img/weddingakad.jpeg" width="100" height="400" class="card-img-top" alt="...">
+              <img src="assets/img/web-asset/javanese.jpeg" width="100" height="400" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title">Pernikahan dalam Islam</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
