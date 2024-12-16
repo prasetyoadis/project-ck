@@ -17,31 +17,43 @@ class Undangan extends Model
         'song',
     ];
 
-    public function order() {
+    public function order()
+    {
         return $this->belongsTo(Order::class);
     }
 
-    public function cpria() {
+    public function cpria()
+    {
         return $this->hasOne(Cpria::class);
     }
 
-    public function cwanita() {
+    public function cwanita()
+    {
         return $this->hasOne(Cwanita::class);
     }
 
-    public function gallery() {
+    public function gallery()
+    {
         return $this->hasMany(Gallery::class);
     }
 
-    public function events() {
+    public function events()
+    {
         return $this->hasMany(Events::class);
     }
 
-    public function comment() {
+    public function comment()
+    {
         return $this->hasMany(Comment::class);
     }
 
-    public function donation() {
+    public function donation()
+    {
         return $this->hasMany(Donation::class);
+    }
+
+    public function stories()
+    {
+        return $this->hasMany(Stories::class);
     }
 }
