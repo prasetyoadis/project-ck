@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('undangan', function (Blueprint $table) {
+        Schema::create('stories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id');
-            $table->foreignId('thame_id');
-            $table->foreignId('cpria_id');
-            $table->foreignId('cwanita_id');
-            $table->string('song');
+            $table->foreignId('undangan_id');
+            $table->string('judul');
+            $table->text('deskripsi');
+            $table->string('gambar');
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('undangan');
+        Schema::dropIfExists('stories');
     }
 };

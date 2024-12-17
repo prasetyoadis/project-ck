@@ -31,6 +31,22 @@ class DatabaseSeeder extends Seeder
             'isadmin' => '1',
         ]);
 
+        User::create([
+            'name' => 'Fathurrahman',
+            'username' => 'fathur',
+            'password' => Hash::make("admin"),
+            'role' => 'staff',
+            'isadmin' => '1',
+        ]);
+
+        User::create([
+            'name' => 'Eva',
+            'username' => 'eva',
+            'password' => Hash::make("admin"),
+            'role' => 'staff',
+            'isadmin' => '1',
+        ]);
+
         Order::create([
             'uuid' => substr(strtoupper(uniqid('CKOI')), 0,16),
             'user_id' => '1',
