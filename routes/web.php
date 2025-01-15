@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\StaffController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -56,21 +57,62 @@ Route::get('/akad-nikah', function () {
     ]);
 });
 //Admin Login
-Route::get('/admin', [UserController::class, 'indexLogin'])
+Route::get('/admin', [AuthController::class, 'indexLogin'])
     ->name('login')
     ->middleware('guest');
-Route::post('/admin', [UserController::class, 'adminLogin']);
-Route::post('/logout', [UserController::class, 'adminLogout']);
+    
+Route::post('/admin', [AuthController::class, 'adminLogin']);
 
+Route::post('/logout', [AuthController::class, 'adminLogout']);
+
+//Email Verify
+Route::get('/email/verify', [AuthController::class, 'index_verifyEmail'])
+    ->middleware('auth', 'has.verified')
+    ->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'token_verifyEmail'])
+    ->middleware(['auth', 'signed'])
+    ->name('verification.verify');
+
+// Route::post('/email/verify/{id}/{hash}', [AuthController::class, 'token_verifyEmail'])
+//     ->middleware(['auth', 'signed'])
+//     ->name('verification.verify');
+ 
+Route::post('/email/verify/resend', [AuthController::class, 'verifyResend'])
+    ->middleware(['auth', 'throttle:6,1'])
+    ->name('verification.send');
+
+//
+
+
+//Dashboard Menu
 Route::get('admin/dashboard', function(){
     return view('dashboard.admin.index', [
         "title" => "Dashboard"
     ]);
-})->middleware(['auth']);
-Route::get('admin/staff', function(){
-    return view('dashboard.admin.staf.index', [
-        "title" => "Staf"
-    ]);
-})->middleware(['auth']);
+})->middleware(['auth', 'verified']);
+
+Route::resource('admin/staff', StaffController::class)
+    ->parameters(['staff' => 'user'])
+    ->middleware(['auth', 'verified']);
+
 Route::resource('admin/orders', OrderController::class)
-    ->middleware(['auth']);
+    ->middleware(['auth', 'verified']);
+
+Route::get('admin/invitations', function(){
+    return view('dashboard.admin.posts.index', [
+        "title" => "Post Undangan"
+    ]);
+})->middleware(['auth', 'verified']);
+
+Route::get('admin/themes', function(){
+    return view('dashboard.admin.themes.index', [
+        "title" => "Themes"
+    ]);
+})->middleware(['auth', 'verified']);
+
+Route::get('admin/category-themes', function(){
+    return view('dashboard.admin.category.index', [
+        "title" => "Category Themes"
+    ]);
+})->middleware(['auth', 'verified']);

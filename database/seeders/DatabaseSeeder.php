@@ -27,9 +27,14 @@ class DatabaseSeeder extends Seeder
             'name' => 'Prasetyo Adi Saputra',
             'username' => 'prasetyoadi',
             'password' => Hash::make("admin"),
-            'role' => 'staff',
+            'email' => 'prasetyoadi522@gmail.com',
+            'no_hp' => '89622539826',
+            'gender' => 'l',
+            'foto' => 'img/users/default_profile_male.png',
+            'role' => 'kaadmin',
             'isadmin' => '1',
         ]);
+        
 
         User::create([
             'name' => 'Fathurrahman',
