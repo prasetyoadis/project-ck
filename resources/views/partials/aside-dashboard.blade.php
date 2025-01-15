@@ -92,19 +92,19 @@
         </a>
       </li>
       <li class="menu-item">
-        <a href="/admin/staff" class="menu-link">
+        <a href="/admin/invitations" class="menu-link">
           <span class="material-symbols-rounded pe-2">post_add</span>
           <div data-i18n="Analytics">Post Undangan</div>
         </a>
       </li>
       <li class="menu-item">
-        <a href="/admin/staff" class="menu-link">
+        <a href="/admin/themes" class="menu-link">
           <span class="material-symbols-rounded pe-2">palette</span>
           <div data-i18n="Analytics">Themes</div>
         </a>
       </li>
       <li class="menu-item">
-        <a href="/admin/staff" class="menu-link">
+        <a href="/admin/category" class="menu-link">
           <span class="material-symbols-rounded pe-2">category</span>
           <div data-i18n="Analytics">Category Themes</div>
         </a>

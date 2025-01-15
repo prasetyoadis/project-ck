@@ -17,19 +17,29 @@
                                 <input
                                     name="uuid"
                                     type="text"
-                                    class="form-control"
+                                    class="form-control @error('uuid') is-invalid @enderror"
                                     value="{{ substr(strtoupper(uniqid('CKOI')), 0,16) }}"
                                     readonly
                                 />
+                                @error('uuid')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}        
+                                    </div>
+                                @enderror
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="tgl_order" class="form-label">Tanggal</label>
                                 <input
                                     name="tgl_order"
-                                    class="form-control"
+                                    class="form-control @error('tgl_order') is-invalid @enderror"
                                     type="datetime-local"
                                     value="{{ date('Y-m-d\TH:i') }}"
                                 />
+                                @error('tgl_order')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}        
+                                    </div>
+                                @enderror
                             </div>
                         </div>
                         <div class="mb-3">
@@ -37,18 +47,28 @@
                             <input
                                 name="nama"
                                 type="text"
-                                class="form-control"
+                                class="form-control @error('nama') is-invalid @enderror"
                                 placeholder="{{ auth()->user()->name }}"
                             />
+                            @error('nama')
+                                <div class="invalid-feedback">
+                                    {{ $message }}        
+                                </div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input
                                 name="email"
                                 type="email"
-                                class="form-control"
+                                class="form-control @error('email') is-invalid @enderror"
                                 placeholder="name@email.com"
                             />
+                            @error('email')
+                                <div class="invalid-feedback">
+                                    {{ $message }}        
+                                </div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="no_hp" class="form-label">No Wa</label>
@@ -57,20 +77,36 @@
                                 <input
                                     name="no_hp"
                                     type="tel"
-                                    class="form-control"
+                                    class="form-control @error('no_hp') is-invalid @enderror"
                                     placeholder="8..."
                                 />
+                                @error('no_hp')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}        
+                                    </div>
+                                @enderror
                             </div>
                         </div>
-                        
-                        <div class="mb-3">
-                            <label for="bukti_bayar" class="form-label">Upload Bukti DP</label>
-                            <input 
-                                name="bukti_bayar"
-                                class="form-control"
-                                type="file"
-                                accept="image/png, image/jpeg"
-                            />
+                        <div class="row">
+                            <div class="col-img col-4 d-none mb-3" style="max-height: 130px; overflow-y:auto">
+                                <img class="img-preview img-fluid mt-1 border rounded" alt="" style="width:100%; overflow-y:scroll;">
+                            </div>
+                            <div class="col-input col-12 mb-3">
+                                <label for="bukti_bayar" class="form-label">Upload Bukti DP</label>
+                                <input 
+                                    name="bukti_bayar"
+                                    class="form-control @error('bukti_bayar') is-invalid @enderror"
+                                    id="bukti-bayar"
+                                    type="file"
+                                    accept="image/png, image/jpeg"
+                                    onchange="previewGambar()"
+                                />
+                                @error('bukti_bayar')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}        
+                                    </div>
+                                @enderror
+                            </div>
                         </div>
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary">Simpan</button>
@@ -89,4 +125,23 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    function previewGambar() {
+        const bukti = document.querySelector('#bukti-bayar');
+        const imgPreview = document.querySelector('.img-preview');
+        const colIN = document.querySelector('.col-input');
+        const colIMG = document.querySelector('.col-img');
+
+        colIN.classList.remove("col-12");
+        colIN.classList.add("col-8");
+        colIMG.classList.remove("d-none");
+
+        const oFReader = new FileReader();
+        oFReader.readAsDataURL(bukti.files[0]);
+        oFReader.onload = function(oFREvent){
+            imgPreview.src = oFREvent.target.result;
+        }
+    }
+</script>
 @endsection

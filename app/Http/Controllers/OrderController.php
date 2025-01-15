@@ -43,7 +43,7 @@ class OrderController extends Controller
             'uuid' => 'required|unique:orders',
             'nama' => 'required|min:3',
             'email' => 'required',
-            'no_hp' => 'required',
+            'no_hp' => 'required|numeric|min:9|max:15',
             'tgl_order' => 'required',
         ]);
 
@@ -75,7 +75,8 @@ class OrderController extends Controller
         $dataPayment['order_id'] = $order->id;
         $dataPayment['tgl_bayar'] = $dataValid['tgl_order'];
         Payment::create($dataPayment);
-        //Redirect Halaman Admin Menu Kelola Anggota
+        
+        //Redirect Halaman Admin Menu Orders
         return redirect('/admin/orders')->with('success', 'Data Order Berhasil Ditambahkan');
     }
 
@@ -115,6 +116,7 @@ class OrderController extends Controller
                 return redirect('/admin/orders')->with('success', 'Orders Telah Lunas');
                 break;
             case 'pembatalan':
+                return $order;
                 Order::where('id', $order->id)->update(['status' => 'batal']);
                 return redirect('/admin/orders')->with('success', 'Orders Telah Dibatalkan');
                 break;

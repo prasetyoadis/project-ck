@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
-class UserController extends Controller
+class AuthController extends Controller
 {
     //Menampilkan Halaman Login User Admin
     public function indexLogin(){
-        return view('dashboard.login-admin', [
+        return view('dashboard.auth.login-admin', [
             "title" => "Login Admin Undangan"
         ]);
     }
@@ -45,5 +46,26 @@ class UserController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/admin');
+    }
+
+    public function index_verifyEmail() {
+        return view('dashboard.auth.verify-email', [
+            "title" => "Verifikasi Email Ulang"
+        ]);
+    }
+
+    public function token_verifyEmail(EmailVerificationRequest $request) {
+        $request->fulfill();
+        return redirect('/admin/dashboard');
+    }
+
+    // public function verifyFulfill(){
+        
+    // }
+
+    public function verifyResend(Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+     
+        return back()->with('message', 'Verifikasi email dikirim!');
     }
 }

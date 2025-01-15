@@ -79,7 +79,7 @@
                     <button
                       type="button"
                       onclick="setBuktiDP('@if ($order->payment->count()){{ $order->payment[0]->bukti_bayar }}@endif')"
-                      class="btn btn-sm btn-primary"
+                      class="btn btn-sm btn-info"
                       data-bs-toggle="modal"
                       data-bs-target="#modalBukti"
                     >
@@ -92,15 +92,15 @@
                   <td class="w-25">
                     <button 
                       type="button"
-                      onclick=" window.open('https://wa.me/{{ $order->no_hp }}?text=Selamat ','_blank')"
-                      class="btn btn-sm btn-primary"
+                      onclick=" window.open('https://wa.me/62{{ $order->no_hp }}?text=Selamat ','_blank')"
+                      class="btn btn-sm btn-info"
                     >
                       <div class="d-flex">
                         <i class='bx bxl-whatsapp align-self-center me-1'></i>
                         <span class="align-self-center">Hubungi Client</span>
                       </div>
                   </button>
-                    <button type="button" class="btn btn-sm btn-info">
+                    <button type="button" class="btn btn-sm btn-primary">
                         <div class="d-flex">
                             <span class="material-symbols-rounded me-1" style="font-size: 20px">post_add</span>
                             <span class="align-self-center">Post Undangan</span>
@@ -170,8 +170,8 @@
           @method('put')
           <input type="hidden" name="req" value="pelunasan">
           <div class="mb-3">
-            <label for="tgl_bayar" class="form-label">Tanggal</label>
-            <input class="form-control" name="tgl_bayar" type="datetime-local" value="{{ date('Y-m-d\TH:i') }}" />
+              <label for="tgl_bayar" class="form-label">Tanggal</label>
+              <input class="form-control" name="tgl_bayar" type="datetime-local" value="{{ date('Y-m-d\TH:i') }}" />
           </div>
           <div class="mb-3">
             <label for="buktibayar" class="from-label">Upload Bukti Pelunasan</label>
@@ -229,6 +229,17 @@
   function setOrderId(orderId) {
     var formUUID = document.getElementById('formUUID');
     formUUID.action = '/admin/orders/' + orderId;
+  }
+
+  function previewFoto() {
+    const gambar = document.querySelector('#foto');
+    const imgPreview = document.querySelector('.img-preview');
+
+    const oFReader = new FileReader();
+      oFReader.readAsDataURL(gambar.files[0]);
+      oFReader.onload = function(oFREvent){
+      imgPreview.src = oFREvent.target.result;
+    }
   }
 </script>
 @endsection
