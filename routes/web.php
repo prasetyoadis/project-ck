@@ -3,6 +3,7 @@
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,103 +17,76 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home',[
-        "title" => "Home"
-    ]);
-});
-Route::get('/about', function () {
-    return view('about', [
-        "title" => "About"
-    ]);
-});
-Route::get('/help', function () {
-    return view('help',[
-        "title" => "Help"    
-    ]);
-});
-Route::get('/katalog', function () {
-    return view('katalog', [
-        "title" => "Katalog"
-    ]);
-});
-Route::get('/blog', function () {
-    return view('Blog', [
-        "title" => "Blog"
-    ]);
-});
-Route::get('/testimoni', function () {
-    return view('testimoni', [
-        "title" => "Testimoni"
-    ]);
-});
-Route::get('/testimoni', function () {
-    return view('testimoni', [
-        "title" => "Testimoni"
-    ]);
-});
-Route::get('/akad-nikah', function () {
-    return view('/tema/pernikahan/akad-nikah', [
-        "title" => "Axel & Michi"
-    ]);
-});
-//Admin Login
+/*
+ * Frontend Route
+ **/
+Route::get('/', [PageController::class, 'index']);
+Route::get('/about', [PageController::class, 'indexAbout']);
+Route::get('/help', [PageController::class, 'indexHelp']);
+Route::get('/blog', [PageController::class, 'indexBlog']);
+Route::get('/testimoni', [PageController::class, 'indexTestimoni']);
+Route::get('/katalog', [PageController::class, 'indexKatalog']);
+Route::get('/katalog/akad-nikah', [PageController::class, 'indexAkadNikah']);
+
+/*
+ * Login & Logout Route
+ **/
 Route::get('/admin', [AuthController::class, 'indexLogin'])
     ->name('login')
     ->middleware('guest');
-    
 Route::post('/admin', [AuthController::class, 'adminLogin']);
-
 Route::post('/logout', [AuthController::class, 'adminLogout']);
 
-//Email Verify
-Route::get('/email/verify', [AuthController::class, 'index_verifyEmail'])
-    ->middleware('auth', 'has.verified')
-    ->name('verification.notice');
+/*
+ * Verify Route
+ **/
+Route::middleware(['auth'])->group(function (){
+    //Email Verify
+    Route::get('/email/verify', [AuthController::class, 'index_verifyEmail'])
+        ->middleware('has.verified')
+        ->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'token_verifyEmail'])
+        ->middleware(['signed'])
+        ->name('verification.verify');
+    // Route::post('/email/verify/{id}/{hash}', [AuthController::class, 'token_verifyEmail'])
+    //     ->middleware(['auth', 'signed'])
+    //     ->name('verification.verify');
+    Route::post('/email/verify/resend', [AuthController::class, 'verifyResend'])
+        ->middleware(['throttle:6,1'])
+        ->name('verification.send');
+});
 
-Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'token_verifyEmail'])
-    ->middleware(['auth', 'signed'])
-    ->name('verification.verify');
 
-// Route::post('/email/verify/{id}/{hash}', [AuthController::class, 'token_verifyEmail'])
-//     ->middleware(['auth', 'signed'])
-//     ->name('verification.verify');
- 
-Route::post('/email/verify/resend', [AuthController::class, 'verifyResend'])
-    ->middleware(['auth', 'throttle:6,1'])
-    ->name('verification.send');
+/*
+ * Backend Route
+ **/
+Route::middleware(['auth', 'verified'])->group(function (){
+    //Dashboard Menu
+    Route::get('admin/dashboard', [PageController::class, 'indexDashboard']);
+    Route::get('admin/settings', function(){
+        return view('layouts.misc-under-maintenance');
+    });
+    Route::get('admin/profile', function(){
+        return view('layouts.misc-under-maintenance');
+    });
+    Route::resource('admin/staff', StaffController::class)
+        ->parameters(['staff' => 'user'])
+        ->middleware('super');
+    Route::resource('admin/orders', OrderController::class);
+    Route::get('admin/invitations', function(){
+        return view('layouts.misc-under-maintenance');
+    });
+    Route::get('admin/themes', function(){
+        return view('layouts.misc-under-maintenance');
+    });
+    Route::get('admin/category-themes', function(){
+        return view('layouts.misc-under-maintenance');
+    });
+    Route::get('admin/riwayat-orders', function(){
+        return view('layouts.misc-under-maintenance');
+    });
+    Route::get('admin/riwayat-incomes', function(){
+        return view('layouts.misc-under-maintenance');
+    })->middleware('super');;
+});
 
-//
-
-
-//Dashboard Menu
-Route::get('admin/dashboard', function(){
-    return view('dashboard.admin.index', [
-        "title" => "Dashboard"
-    ]);
-})->middleware(['auth', 'verified']);
-
-Route::resource('admin/staff', StaffController::class)
-    ->parameters(['staff' => 'user'])
-    ->middleware(['auth', 'verified']);
-
-Route::resource('admin/orders', OrderController::class)
-    ->middleware(['auth', 'verified']);
-
-Route::get('admin/invitations', function(){
-    return view('dashboard.admin.posts.index', [
-        "title" => "Post Undangan"
-    ]);
-})->middleware(['auth', 'verified']);
-
-Route::get('admin/themes', function(){
-    return view('dashboard.admin.themes.index', [
-        "title" => "Themes"
-    ]);
-})->middleware(['auth', 'verified']);
-
-Route::get('admin/category-themes', function(){
-    return view('dashboard.admin.category.index', [
-        "title" => "Category Themes"
-    ]);
-})->middleware(['auth', 'verified']);

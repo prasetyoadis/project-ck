@@ -159,7 +159,6 @@
                             <label for="role" class="form-label">Jabatan</label>
                             <select name="role" class="form-select @error('role') is-invalid @enderror">
                                 <option>-- Pilih Jabatan --</option>
-                                <option value="kaadmin">Super Admin</option>
                                 <option value="staff">Admin Staff</option>
                             </select>
                             @error('role')

@@ -1,4 +1,4 @@
-@extends('layout/main')
+@extends('layouts/main')
 
 @section('container')
 <div class="cover-image">

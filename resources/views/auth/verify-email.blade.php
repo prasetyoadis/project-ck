@@ -68,11 +68,41 @@
             background-color: #d9d9d9;
         }
         .card:hover{
-                border-color: black;
+            border-color: black;
+        }
+        .btn{
+            padding: 0.4375rem 1.25rem;
+            font-weight: 400;
+            font-size: 0.9375rem;
+            line-height: 1.53;
+            border-radius: 0.375rem;
+            transition: all 0.2s ease-in-out;
+        }
+        .rounded{
+            border-radius: 0.5rem;
+        }
+        .btn-primary{
+            background-color: #696cff;
+            border-color: #696cff;
+            box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
+        }
+        .btn-primary:hover{
+            background-color: #5f61e6;
+            border-color: #5f61e6;
+            transform: translateY(-1px);
+        }
+        a{
+            color:#696cff;
+            text-underline-offset: 0.25em;
+        }
+        .btn.disabled, .btn:disabled, fieldset:disabled .btn{
+            background-color: #696cff;
+            border-color: #696cff;
+            opacity: 0.65;
         }
     </style>
     
-    <title>{{ $title }} | Login Ceritakita</title>
+    <title>{{ $title }} | {{ config('app.name') }}</title>
 </head>
 <body>
     <div class="bg-slider">
@@ -83,7 +113,7 @@
             <main class="mt-4 content">
                 <div class="row d-flex justify-content-center align-content-center p-0 m-0">
                     <div class="col-9 col-sm-7 col-md-5 col-lg-4 col-xl-3 p-0 m-0">
-                        <div class="bg-light w-100 p-3 rounded">
+                        <div class="bg-light w-100 p-4 rounded">
                             <div class="text-center">
                                 <img src="/assets/img/illustrations/send-email.png" alt="logo-Surat" class="rounded-circle w-25">
                                 <h3 class="fw-bold">Verifikasi</h3>
@@ -93,16 +123,16 @@
                             @if (session()->has('success'))
                                 <div class="alert alert-success mb-2 alert-dismissible fade show" role="alert">
                                     <span class="material-symbols-rounded align-middle">check_circle</span>
-                                    <span class="align-middle">{{ session('message') }}</span>
+                                    <span class="align-middle">{{ session('success') }}</span>
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             @endif
                             <div class="text-center">
-                                <p>Jika Anda tidak menerima atau melihat email dari kami, tolong cek pada spam. Apabila masih belum menemukan email kami. Silahkan klik tombol dibawah:</p>
-                                <form action="{{ route('verification.send') }}" method="POST" id="form-action">
+                                <p class="m-0">Jika Anda tidak menerima atau melihat email dari kami, tolong cek pada spam. Apabila masih belum menemukan email kami. Silahkan klik tombol dibawah:</p>
+                                <form action="{{ route('verification.send') }}" method="POST" id="form-action" class="mt-4 mb-3">
                                     @csrf
                                     <div class="form-group form-button">
-                                        <input type="submit" class="form-submit btn btn-primary" id="form-submit" value="Kirim Kembali Verifikasi Email" onclick="updateButton()"/>
+                                        <input type="submit" class="btn btn-primary d-grid w-100" id="form-submit" value="Kirim Kembali Verifikasi Email" onclick="updateButton()"/>
                                     </div>
                                 </form>
                             </div>
@@ -122,25 +152,6 @@
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
      <script>
-        // const button = document.getElementById('submitButton');
-        // const timerDisplay = document.getElementById('cooldownTimer');
-        // const cooldownTime = 60; // cooldown time in seconds
-
-        // button.addEventListener('click', () => {
-        //     button.disabled = true;
-        //     let remainingTime = cooldownTime;
-
-        //     const interval = setInterval(() => {
-        //         remainingTime--;
-        //         timerDisplay.textContent = `Please wait ${remainingTime} seconds...`;
-
-        //         if (remainingTime <= 0) {
-        //             clearInterval(interval);
-        //             button.disabled = false;
-        //             timerDisplay.textContent = '';
-        //         }
-        //     }, 1000);
-
         var countdown = 60;
 
         function updateButton() {
