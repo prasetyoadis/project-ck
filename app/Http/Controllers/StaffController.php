@@ -27,9 +27,9 @@ class StaffController extends Controller
         elseif (($now >= "1501") && ($now <= "1830")) { $greeting = "Sore";}
         elseif (($now >= "1831")) { $greeting = "Malam";} 
         
-        return view('dashboard.admin.staff.index', [
+        return view('dashboard.admin.staff.index',[
             "title" => "Staff Admin",
-            "users" => User::latest()->where('role', 'staff')->paginate(5)->appends(request()->all()),
+            "users" => User::latest()->paginate(5)->appends(request()->all()),
             "salam" => $greeting
         ]);
     }

@@ -67,40 +67,11 @@
             background-color: #d9d9d9;
         }
         .card:hover{
-            border-color: black;
-        }
-        .btn{
-            padding: 0.4375rem 1.25rem;
-            font-weight: 400;
-            font-size: 0.9375rem;
-            line-height: 1.53;
-            border-radius: 0.375rem;
-            transition: all 0.2s ease-in-out;
-        }
-        .rounded{
-            border-radius: 0.5rem;
-        }
-        .btn-primary{
-            background-color: #696cff;
-            border-color: #696cff;
-            box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
-
-        }
-        .btn-primary:hover{
-            background-color: #5f61e6;
-            border-color: ##5f61e6;
-            transform: translateY(-1px);
-        }
-        a{
-            color:#696cff;
-            text-decoration: none;
-        }
-        a:hover{
-            color: #787bff;
+                border-color: black;
         }
     </style>
     
-    <title>{{ $title }} | {{ config('app.name') }}</title>
+    <title>{{ $title }} | Login Ceritakita</title>
 </head>
 <body>
     <div class="bg-slider">
@@ -111,11 +82,11 @@
             <main class="mt-4 content">
                 <div class="row d-flex justify-content-center align-content-center p-0 m-0">
                     <div class="col-9 col-sm-7 col-md-5 col-lg-4 col-xl-3 p-0 m-0">
-                        <div class="bg-light w-100 p-4 rounded">
+                        <div class="bg-light w-100 p-3 rounded">
                             <div class="text-center">
-                                <img src="/favicon.ico" alt="logo-undangan" class="rounded-circle" width="20%" height="20%">
-                                <h3 class="fw-bold">Login</h3>
-                                <h3 class="fw-bold">Staff CeritaKita</h3>
+                            <img src="https://percetakangoprint.com/wp-content/uploads/2020/06/Undangan.png" alt="logo-undangan" class="rounded-circle w-25">
+                            <h3 class="fw-bold">Login</h3>
+                            <h3 class="fw-bold">Staff Ceritakita</h3>
                             </div>
                             {{-- Alert jika salah data login atau sukses ganti password--}}
                             @if (session()->has('loginError'))
@@ -133,23 +104,23 @@
                                 </div>
                             @endif
                             {{-- Form Login Admin --}}
-                            <form action="/admin" method="POST" class="mt-4 mb-3">
+                            <form action="/admin" method="POST" class="mt-4 mb-4">
                                 @csrf
-                                <div class="position-relative mb-3">
+                                <div class="position-relative mb-4">
                                     <label for="username" class="form-label" hidden>Username</label>
                                     <span class="position-absolute material-symbols-rounded" style="top: 7px; left:7px">account_box</span>
                                     <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" id="username" style="padding-left: 35px" placeholder="Username" required autofocus value="{{ old('username') }}">
                                 </div>
-                                <div class="position-relative mb-3">
+                                <div class="position-relative mb-2">
                                     <label for="password" class="form-label" hidden>Password</label>
                                     <span class="position-absolute material-symbols-rounded" style="top: 7px; left:7px">lock</span>
                                     <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" style="padding-left: 35px" placeholder="Password" required>
                                 </div>
-                                <div class="d-flex justify-content-end mb-3">
-                                    <a href="/forgot-password">Lupa Password?</a>
+                                <div class="d-flex justify-content-end mb-2">
+                                    <a href="http://">Lupa Password?</a>
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary d-grid w-100">Login</button>
+                                    <button type="submit" class="btn btn-primary">Login</button>
                                 </div>
                             </form>
                         </div>

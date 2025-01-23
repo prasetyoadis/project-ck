@@ -10,11 +10,10 @@ class AuthController extends Controller
 {
     //Menampilkan Halaman Login User Admin
     public function indexLogin(){
-        return view('auth.login-admin', [
+        return view('dashboard.auth.login-admin', [
             "title" => "Login Admin Undangan"
         ]);
     }
-
     //Proses Login User Admin
     public function adminLogin(Request $request){
         $formValid = $request->validate([
@@ -50,7 +49,7 @@ class AuthController extends Controller
     }
 
     public function index_verifyEmail() {
-        return view('auth.verify-email', [
+        return view('dashboard.auth.verify-email', [
             "title" => "Verifikasi Email Ulang"
         ]);
     }
@@ -67,6 +66,6 @@ class AuthController extends Controller
     public function verifyResend(Request $request) {
         $request->user()->sendEmailVerificationNotification();
      
-        return back()->with('success', 'Verifikasi email dikirim!');
+        return back()->with('message', 'Verifikasi email dikirim!');
     }
 }
