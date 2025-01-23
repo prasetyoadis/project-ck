@@ -1,4 +1,4 @@
-@extends('layout/main')
+@extends('layouts/main')
 
 @section('container')
     <h1>Halaman Artikel</h1>

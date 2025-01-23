@@ -163,7 +163,6 @@
                             <label for="role" class="form-label">Jabatan</label>
                             <select name="role" class="form-select @error('role') is-invalid @enderror">
                                 <option>-- Pilih Jabatan --</option>
-                                <option value="kaadmin" @if ($user->role=='kaadmin') selected @endif>Super Admin</option>
                                 <option value="staff" @if ($user->role=='staff') selected @endif>Admin Staff</option>
                             </select>
                             @error('role')

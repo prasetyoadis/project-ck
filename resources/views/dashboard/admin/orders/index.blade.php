@@ -137,7 +137,7 @@
                     @endforeach
                 @else
                     <tr>
-                        <td scope="row" colspan="5" class="text-center">Data Order Tidak Ditemukan..</td>
+                        <td scope="row" colspan="6" class="text-center">Data Order Tidak Ditemukan..</td>
                     </tr>
                 @endif
               </tbody>
