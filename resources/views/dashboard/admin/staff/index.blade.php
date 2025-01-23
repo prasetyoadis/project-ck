@@ -111,8 +111,8 @@
                                 Super Admin
                             @endif</td>
                             <td>
-                                <span class="badge @if ($user->isadmin==='1') bg-label-success @else bg-label-danger @endif me-1">
-                                @if ($user->isadmin=='1')
+                                <span class="badge @if ($user->isactive==='1') bg-label-success @else bg-label-danger @endif me-1">
+                                @if ($user->isactive=='1')
                                     Aktif
                                 @else
                                     Nonaktif
@@ -142,10 +142,10 @@
                                 @csrf
                                 @method('put')
                                     <input type="hidden" name="req" value="status">
-                                    <button type="submit" class="btn btn-sm @if ($user->isadmin=="0") btn-success @else btn-danger @endif mt-1" onclick="return confirm('Yakin @if ($user->isadmin=="0") Mengaktifkan @else Menonaktifkan @endif Staff Ini?')">
+                                    <button type="submit" class="btn btn-sm @if ($user->isactive=="0") btn-success @else btn-danger @endif mt-1" onclick="return confirm('Yakin @if ($user->isactive=="0") Mengaktifkan @else Menonaktifkan @endif Staff Ini?')">
                                         <div class="d-flex">
-                                            <span class="material-symbols-rounded me-1" style="font-size:20px">@if ($user->isadmin=="0") account_circle @else account_circle_off @endif</span>
-                                            <span class="align-self-center">@if ($user->isadmin=="0") Aktifkan @else Nonaktifkan @endif</span>
+                                            <span class="material-symbols-rounded me-1" style="font-size:20px">@if ($user->isactive=="0") account_circle @else account_circle_off @endif</span>
+                                            <span class="align-self-center">@if ($user->isactive=="0") Aktifkan @else Nonaktifkan @endif</span>
                                         </div>
                                     </button>
                                 </form>
