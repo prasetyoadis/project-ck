@@ -62,7 +62,7 @@ class StaffController extends Controller
         ]);
         $dataValid['password'] = Hash::make($request->password);
         $dataValid['foto'] = ($request->gender=='l') ? "img/users/default_profile_male.png" : "img/users/default_profile_female.png";
-        $dataValid['isadmin'] = "1";
+        $dataValid['isactive'] = "1";
 
         $user = User::create($dataValid);
 
@@ -142,7 +142,7 @@ class StaffController extends Controller
                 break;
 
             case 'status':
-                User::where('id', $user->id)->update(['isadmin' => ($user->isadmin==='0') ? '1' : '0']);
+                User::where('id', $user->id)->update(['isactive' => ($user->isactive==='0') ? '1' : '0']);
                 //Redirect Halaman Admin Menu Staff
                 return redirect('/admin/staff')->with('success', 'Status Staff Telah Diubah');
                 break;

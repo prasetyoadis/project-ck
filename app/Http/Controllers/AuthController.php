@@ -26,9 +26,9 @@ class AuthController extends Controller
         if (Auth::attempt($formValid)) {
             $request->session()->regenerate();
             
-            if (auth()->user()->isadmin == "0") {
+            if (auth()->user()->isactive == "0") {
                 Auth::logout();
-
+                
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
 
