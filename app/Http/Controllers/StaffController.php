@@ -125,7 +125,7 @@ class StaffController extends Controller
                 $randPass = substr(str_shuffle('!@#$%^&*()-_+=<>?abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=<>?'), 0,10);
                 $hashPass = Hash::make($randPass);
                 
-                $status = User::where('id', $user->id)->update(['password' => $hashPass]);
+                $status = User::where('id', $user->id)->update(['password' => $hashPass, 'isreqreset' => '0']);
                 
                 if ($status) {
                     # code...

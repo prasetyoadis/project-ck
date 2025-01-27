@@ -130,11 +130,22 @@
                                     @csrf
                                     @method('put')
                                     <input type="hidden" name="req" value="resetPass">
-                                    <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Yakin Reset Password Staff Ini?')">
+                                    {{-- <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Yakin Reset Password Staff Ini?')">
                                         <div class="d-flex">
                                             <span class="material-symbols-rounded me-1" style="font-size: 20px">lock_reset</span>
                                             <span class="align-self-center">Reset Password</span>
                                         </div>
+                                    </button> --}}
+                                    <button type="submit" class="btn btn-sm btn-primary position-relative" onclick="return confirm('Yakin Reset Password Staff Ini?')">
+                                        <div class="d-flex">
+                                            <span class="material-symbols-rounded me-1" style="font-size: 20px">lock_reset</span>
+                                            <span class="align-self-center">Reset Password</span>
+                                        </div>
+                                        @if ($user->isreqreset==1)
+                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger fw-bold" style="padding-left: 0.44rem; padding-right: 0.44rem ">
+                                                !
+                                            </span>
+                                        @endif
                                     </button>
                                 </form>
                                 <br>

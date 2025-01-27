@@ -37,6 +37,11 @@ Route::get('/admin', [AuthController::class, 'indexLogin'])
 Route::post('/admin', [AuthController::class, 'adminLogin']);
 Route::post('/logout', [AuthController::class, 'adminLogout']);
 
+Route::get('/forgot-password', [AuthController::class, 'indexForgotPass'])
+    ->middleware('guest');
+Route::post('/forgot-password', [AuthController::class, 'forgotPass'])
+    ->middleware('guest');
+
 /*
  * Verify Route
  **/
