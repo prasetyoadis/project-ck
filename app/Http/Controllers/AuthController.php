@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Mail\ReqResetPassword;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 class AuthController extends Controller
@@ -68,5 +72,31 @@ class AuthController extends Controller
         $request->user()->sendEmailVerificationNotification();
      
         return back()->with('success', 'Verifikasi email dikirim!');
+    }
+
+    public function indexForgotPass(){
+        return view('auth.forgot-password', [
+            "title" => "Lupa Password"
+        ]);
+    }
+
+    public function forgotPass(Request $request){
+        //Cek input Email adalah bagian dari staff admin
+        $formValid = $request->validate([
+            'email' => 'required|email',
+        ]);
+        $isExist = User::where('email', $formValid['email'])->get();
+        
+        if ($isExist->count() == 1) {
+            User::where('id', $isExist[0]->id)->update(['isreqreset' => '1']);
+
+            $isExist[0]['timenow'] = date('Y-m-d H:i:s');
+
+            Mail::to(new Address('ceritakita2509@gmail.com', 'CeritaKita'))->send(new ReqResetPassword($isExist));
+
+            return back()->with('success', 'Permintaan Reset Password Berhasil dikirim!');
+        } else{
+            return back()->with('error', 'Email Tidak Ada Dalam Daftar Staff Admin!');
+        }
     }
 }

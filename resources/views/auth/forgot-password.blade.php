@@ -4,12 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    {{-- CSS ICON --}}
+    
+    <!-- Fonts -->
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+
     <link rel="stylesheet" href="/css/icofont.min.css">
-    {{-- JS --}}
+    <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    {{-- CSS --}}
+    <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         footer a{
@@ -89,7 +94,7 @@
         }
         .btn-primary:hover{
             background-color: #5f61e6;
-            border-color: ##5f61e6;
+            border-color: #5f61e6;
             transform: translateY(-1px);
         }
         a{
@@ -116,47 +121,51 @@
             <main class="mt-4 content">
                 <div class="row d-flex justify-content-center align-content-center p-0 m-0">
                     <div class="col-9 col-sm-7 col-md-5 col-lg-4 col-xl-3 p-0 m-0">
-                        <div class="bg-light w-100 p-4 rounded">
+                        <div class="bg-light w-100 p-4 rounded" style="border-radius: 0.5rem;">
                             <div class="text-center">
                                 <img src="/favicon.ico" alt="logo-undangan" class="rounded-circle" width="20%" height="20%">
-                                <h3 class="fw-bold">Login</h3>
-                                <h3 class="fw-bold">Staff CeritaKita</h3>
+                                <h3 class="fw-bold mb-3">CeritaKita</h3>
                             </div>
                             {{-- Alert jika salah data login atau sukses ganti password--}}
-                            @if (session()->has('loginError'))
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <span class="material-symbols-rounded align-middle">warning</span>
-                                    <span class="align-middle"><strong> Login Error: </strong> {{ session('loginError') }}</span>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                            @endif
                             @if (session()->has('success'))
-                                <div class="alert alert-success mb-2 alert-dismissible fade show" role="alert">
-                                    <span class="material-symbols-rounded align-middle">check_circle</span>
-                                    <span class="align-middle"><strong> Sukses: </strong> {{ session('success') }}</span>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <div class="alert alert-success mb-0 alert-dismissible fade show" role="alert">
+                                    <div class="d-flex align-items-center">
+                                        <span class="material-symbols-rounded me-2">check_circle</span>
+                                        <span class="align-middle"><strong> Sukses: </strong> {{ session('success') }}</span>
+                                        <button type="button" class="btn-close" style="top:15%" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
                                 </div>
                             @endif
+                            @if (session()->has('error'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <div class="d-flex align-items-center">
+                                        <span class="material-symbols-rounded me-2">warning</span>
+                                        <span class="align-middle"><strong> Error: </strong> {{ session('error') }}</span>
+                                        <button type="button" class="btn-close" style="top:15%" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </div>
+                            @endif
+                            
+                            <h4 class="mt-3">Lupa Password?</h4>
+                            <p class="m-0">Masukan Email Anda dan kami akan memberikan intruksi untuk mengatur ulang password.</p>
                             {{-- Form Login Admin --}}
-                            <form action="/admin" method="POST" class="mt-4 mb-3">
+                            <form action="/forgot-password" method="POST" class="mt-4 mb-3">
                                 @csrf
                                 <div class="position-relative mb-3">
-                                    <label for="username" class="form-label" hidden>Username</label>
-                                    <span class="position-absolute material-symbols-rounded" style="top: 8px; left:7px">account_box</span>
-                                    <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" id="username" style="padding-left: 35px" placeholder="Username" required autofocus value="{{ old('username') }}">
-                                </div>
-                                <div class="position-relative mb-3">
-                                    <label for="password" class="form-label" hidden>Password</label>
-                                    <span class="position-absolute material-symbols-rounded" style="top: 8px; left:7px">lock</span>
-                                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" style="padding-left: 35px" placeholder="Password" required>
-                                </div>
-                                <div class="d-flex justify-content-end mb-3">
-                                    <a href="/forgot-password">Lupa Password?</a>
+                                    <label for="password" class="form-label" hidden>Email</label>
+                                    <span class="position-absolute material-symbols-rounded" style="top: 8.5px; left:7px">mail</span>
+                                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Password" required>
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary d-grid w-100">Login</button>
+                                    <button type="submit" class="btn btn-primary d-grid w-100">Kirim Permintaan Reset Password</button>
                                 </div>
                             </form>
+                            <div class="text-center">
+                                <a href="/admin" class="d-flex align-items-center justify-content-center">
+                                    <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+                                    Kembali ke Login
+                                </a>
+                              </div>
                         </div>
                     </div>
                 </div>

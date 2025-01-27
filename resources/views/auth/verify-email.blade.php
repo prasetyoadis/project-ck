@@ -71,15 +71,16 @@
             border-color: black;
         }
         .btn{
-            padding: 0.4375rem 1.25rem;
+            padding: 0.4375rem 1.25rem !important;
             font-weight: 400;
-            font-size: 0.9375rem;
+            font-size: 0.9375rem !important;
             line-height: 1.53;
-            border-radius: 0.375rem;
+            border: 1px solid transparent;
+            border-radius: 0.375rem !important;
             transition: all 0.2s ease-in-out;
         }
         .rounded{
-            border-radius: 0.5rem;
+            border-radius: 0.5rem !important;
         }
         .btn-primary{
             background-color: #696cff;
@@ -99,6 +100,9 @@
             background-color: #696cff;
             border-color: #696cff;
             opacity: 0.65;
+        }
+        .form-control{
+            padding: 0.4375rem 0.875rem 0.4375rem 35px!important;
         }
     </style>
     
