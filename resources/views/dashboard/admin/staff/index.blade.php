@@ -1,7 +1,18 @@
 @extends('layouts.main-dashboard')
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Dashboard /</span> Orders</h4>
+<!-- Breadcrumb -->
+    <h4 class="fw-bold py-3 mb-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item text-muted fw-light">
+                    <a href="/admin/dashboard">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">{{ $title }}</li>
+            </ol>
+        </nav>
+    </h4>
+<!--/ End Breadcrumb -->
 
 <!-- Hoverable Table rows -->
     <div class="card">
@@ -71,7 +82,12 @@
                     @if ($users->count())
                     @foreach ($users as $user)
                         <tr>
-                            <td><img src="/{{ $user->foto }}" alt="foto-{{ $user->username }}" class="img-fluid border rounded-circle" style="width: 64px; height: 64px"></td>
+                            <td>
+                                <img src="/{{ $user->foto }}" 
+                                alt="foto-{{ $user->username }}" 
+                                class="img-thumbnail rounded-circle" 
+                                style="width: 64px; height: 64px; object-fit:cover; object-position: center;">
+                            </td>
                             <td class="fw-bold">{{ $user->name }}</td>
                             <td class="fw-bold">{{ $user->username }}</td>
                             <td>

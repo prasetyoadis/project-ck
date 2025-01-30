@@ -2,9 +2,23 @@
 
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Dashboard / Orders / </span>Create Order</h4>
+<!-- Breadcrumb -->
+    <h4 class="fw-bold py-3 mb-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item text-muted fw-light">
+                    <a href="/admin/dashboard">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item text-muted fw-light">
+                    <a href="/admin/orders">Orders</a>
+                </li>
+                <li class="breadcrumb-item active">{{ $title }}</li>
+            </ol>
+        </nav>
+</h4>
+<!--/ End Breadcrumb -->
 
-    <!-- Hoverable Table rows -->
+<!-- Hoverable Table rows -->
     <div class="card">
         <div class="card-body">
             <form action="/admin/orders" method="POST" enctype="multipart/form-data">
@@ -109,11 +123,11 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="submit" class="btn btn-success">Simpan</button>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="card bg-info text-white mb-3">
+                        <div class="card bg-info text-white mt-3 mt-lg-0 mb-3">
                             <div class="card-header">Note:</div>
                             <div class="card-body">
                                 <span class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam culpa hic est optio natus officiis aut sint neque, quae sequi, qui quis ipsum perspiciatis ab a at quaerat magnam aperiam.</span>
