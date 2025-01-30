@@ -44,7 +44,7 @@
         <li class="nav-item navbar-dropdown dropdown-user dropdown">
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                 <div class="avatar avatar-online">
-                    <img src="/{{ auth()->user()->foto }}" alt class="w-px-40 h-auto rounded-circle" />
+                    <img src="/{{ auth()->user()->foto }}" class="w-px-40 rounded-circle" style="height: 40px; object-fit:cover; object-position: center;" />
                 </div>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
@@ -53,7 +53,7 @@
                     <div class="d-flex">
                         <div class="flex-shrink-0 me-3">
                         <div class="avatar avatar-online">
-                            <img src="/{{ auth()->user()->foto }}" alt class="w-px-40 h-auto rounded-circle" />
+                            <img src="/{{ auth()->user()->foto }}" class="w-px-40 rounded-circle" style="height: 40px; object-fit:cover; object-position: center;" />
                         </div>
                         </div>
                         <div class="flex-grow-1">
@@ -73,7 +73,7 @@
                     <div class="dropdown-divider"></div>
                 </li>
                 <li>
-                    <a class="dropdown-item" href="/admin/profile">
+                    <a class="dropdown-item" href="/admin/{{ '@'.auth()->user()->username }}">
                     <i class="bx bx-user me-2"></i>
                     <span class="align-middle">My Profile</span>
                     </a>

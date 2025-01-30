@@ -4,6 +4,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -71,9 +73,6 @@ Route::middleware(['auth', 'verified'])->group(function (){
     Route::get('admin/settings', function(){
         return view('layouts.misc-under-maintenance');
     });
-    Route::get('admin/profile', function(){
-        return view('layouts.misc-under-maintenance');
-    });
     Route::resource('admin/staff', StaffController::class)
         ->parameters(['staff' => 'user'])
         ->middleware('super');
@@ -90,8 +89,10 @@ Route::middleware(['auth', 'verified'])->group(function (){
     Route::get('admin/riwayat-orders', function(){
         return view('layouts.misc-under-maintenance');
     });
-    Route::get('admin/riwayat-incomes', function(){
-        return view('layouts.misc-under-maintenance');
-    })->middleware('super');;
+    
 });
-
+Route::middleware(['auth', 'verified'])->group(function (){
+    Route::get('admin/@{user}', [UserController::class, 'index']);
+    Route::get('admin/@{user}/edit', [UserController::class, 'edit']);
+    Route::put('admin/@{user}', [UserController::class, 'update']);
+});
