@@ -42,9 +42,9 @@ class Undangan extends Model
         return $this->hasMany(Events::class);
     }
 
-    public function comment()
+    public function rsvp()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Rsvp::class);
     }
 
     public function donation()

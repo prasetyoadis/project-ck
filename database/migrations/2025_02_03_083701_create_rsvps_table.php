@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('rsvps', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('komentar');
+            $table->string('ucapan')->nullable();
+            $table->enum('kehadiran', ['hadir', 'tidak_hadir', 'belum_memutuskan']);
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('rsvps');
     }
 };
