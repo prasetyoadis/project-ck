@@ -73,13 +73,13 @@
                     <div class="dropdown-divider"></div>
                 </li>
                 <li>
-                    <a class="dropdown-item" href="/admin/{{ '@'.auth()->user()->username }}">
-                    <i class="bx bx-user me-2"></i>
-                    <span class="align-middle">My Profile</span>
+                    <a class="dropdown-item @if (Request::is('admin/@'. auth()->user()->username . '*')) active @endif" href="/admin/{{ '@'.auth()->user()->username }}">
+                        <i class="bx bx-user me-2"></i>
+                        <span class="align-middle">My Profile</span>
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" href="/admin/settings">
+                    <a class="dropdown-item @if (Request::is('admin/settings*')) active @endif" href="/admin/settings">
                         <i class="bx bx-cog me-2"></i>
                         <span class="align-middle">Settings</span>
                     </a>

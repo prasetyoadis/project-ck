@@ -125,10 +125,12 @@
                             </div>
                             
                             @if (session()->has('success'))
-                                <div class="alert alert-success mb-2 alert-dismissible fade show" role="alert">
-                                    <span class="material-symbols-rounded align-middle">check_circle</span>
-                                    <span class="align-middle">{{ session('success') }}</span>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <div class="alert alert-success mb-0 alert-dismissible fade show" role="alert">
+                                    <div class="d-flex align-items-center">
+                                        <span class="material-symbols-rounded me-2">check_circle</span>
+                                        <span class="align-middle"><strong> Sukses: </strong> {{ session('success') }}</span>
+                                        <button type="button" class="btn-close" style="top:15%" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
                                 </div>
                             @endif
                             <div class="text-center">

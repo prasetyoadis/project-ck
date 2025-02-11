@@ -55,7 +55,7 @@ class StaffController extends Controller
             'username' => 'required|unique:users',
             'password' => 'required',
             'name' => 'required|min:3',
-            'email' => 'required',
+            'email' => 'required|email',
             'no_hp' => 'required|min:9|max:15',
             'gender' => 'required',
             'role' => 'required|not_in:"-- Pilih Jabatan --"',
@@ -100,7 +100,7 @@ class StaffController extends Controller
                     'no_hp' => 'required|min:9|max:15',
                     'gender' => 'required',
                 ];
-                
+                $idUser = $user->id;
                 //Jika Request Role Tidak Sama Dengan Data Role User Isi Rule Data Role
                 if ($request->role != $user->role) $dataRules['role'] = 'required|not_in:"-- Pilih Jabatan --"';
                 //Validasi Data dengan dataRules
@@ -112,9 +112,11 @@ class StaffController extends Controller
                 //Update Dengan dataValid Pada Model User Berdasarkan id User
                 $status = User::where('id', $user->id)->update($dataValid);
 
+                $userUpdate = User::where('id', $user->id)->get();
+
                 if($request->email != $user->email){
                     if ($status) {
-                        event(new ReverifyEmail($user));
+                        event(new ReverifyEmail($userUpdate[0]));
                     }
                 }
                 //Redirect Halaman Admin Menu Staff

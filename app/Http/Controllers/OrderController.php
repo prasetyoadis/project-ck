@@ -42,13 +42,10 @@ class OrderController extends Controller
         $dataValid = $request->validate([
             'uuid' => 'required|unique:orders',
             'nama' => 'required|min:3',
-            'email' => 'required',
-            'no_hp' => 'required|numeric|min:9|max:15',
+            'email' => 'required|email',
+            'no_hp' => 'required|min:9|max:15',
             'tgl_order' => 'required',
-        ]);
-
-        $dataPayment = $request->validate([
-            'bukti_bayar' => 'image|file|max:2042'
+            'bukti_bayar' => 'required|image|file|max:2042|mimes:jpeg,png',
         ]);
         //Jika Terdapat Request file foto
         if ($request->file('bukti_bayar')) {
@@ -68,6 +65,8 @@ class OrderController extends Controller
         
         $dataValid['user_id'] = auth()->user()->id;
         $dataValid['status'] = "dp";
+        unset($dataValid['bukti_bayar']);
+        
         //Menyimpan dataValid Ke Model User
         Order::create($dataValid);
         $order = Order::firstWhere('uuid', $request->uuid);

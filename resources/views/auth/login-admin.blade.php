@@ -123,18 +123,22 @@
                                 <h3 class="fw-bold">Staff CeritaKita</h3>
                             </div>
                             {{-- Alert jika salah data login atau sukses ganti password--}}
-                            @if (session()->has('loginError'))
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <span class="material-symbols-rounded align-middle">warning</span>
-                                    <span class="align-middle"><strong> Login Error: </strong> {{ session('loginError') }}</span>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            @if (session()->has('success'))
+                                <div class="alert alert-success mb-0 alert-dismissible fade show" role="alert">
+                                    <div class="d-flex align-items-center">
+                                        <span class="material-symbols-rounded me-2">check_circle</span>
+                                        <span class="align-middle"><strong> Sukses: </strong> {{ session('success') }}</span>
+                                        <button type="button" class="btn-close" style="top:15%" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
                                 </div>
                             @endif
-                            @if (session()->has('success'))
-                                <div class="alert alert-success mb-2 alert-dismissible fade show" role="alert">
-                                    <span class="material-symbols-rounded align-middle">check_circle</span>
-                                    <span class="align-middle"><strong> Sukses: </strong> {{ session('success') }}</span>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            @if (session()->has('error'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <div class="d-flex align-items-center">
+                                        <span class="material-symbols-rounded me-2">warning</span>
+                                        <span class="align-middle"><strong> Error: </strong> {{ session('error') }}</span>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
                                 </div>
                             @endif
                             {{-- Form Login Admin --}}

@@ -87,12 +87,17 @@
                         <div class="mb-3">
                             <label for="no_hp" class="form-label">No Wa</label>
                             <div class="input-group input-group-merge">
-                                <span class="input-group-text">+62</span>
+                                <span class="input-group-text @error('no_hp') border border-danger @enderror">
+                                    <i class="bx bx-phone me-1"></i>
+                                    +62
+                                </span>
                                 <input
                                     name="no_hp"
                                     type="tel"
-                                    class="form-control @error('no_hp') is-invalid @enderror"
+                                    class="form-control @error('no_hp') is-invalid rounded-end @enderror"
                                     placeholder="8..."
+                                    @error('no_hp')style="border-right: 1px solid #ff3e1d"@enderror
+                                    onkeyup="numberOnly(this)"
                                 />
                                 @error('no_hp')
                                     <div class="invalid-feedback">
@@ -114,6 +119,7 @@
                                     type="file"
                                     accept="image/png, image/jpeg"
                                     onchange="previewGambar()"
+                                    
                                 />
                                 @error('bukti_bayar')
                                     <div class="invalid-feedback">
@@ -156,6 +162,10 @@
         oFReader.onload = function(oFREvent){
             imgPreview.src = oFREvent.target.result;
         }
+    }
+    function numberOnly(input) {
+        var regex = /[^0-9\n\t]/gi;
+        input.value = input.value.replace(regex, "");
     }
 </script>
 @endsection
