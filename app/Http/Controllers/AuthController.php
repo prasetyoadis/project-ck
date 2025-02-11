@@ -36,12 +36,12 @@ class AuthController extends Controller
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
 
-                return back()->with('loginError', 'Status Admin non-Aktif!!');
+                return back()->with('error', 'Status Admin non-Aktif!!');
             }
             return redirect()->intended('admin/dashboard');
             
         }
-        return back()->with('loginError', 'Data login Salah!!');
+        return back()->with('error', 'Data login Salah!!');
     }
     //Proses Logout User
     public function adminLogout(Request $request){
@@ -71,7 +71,7 @@ class AuthController extends Controller
     public function verifyResend(Request $request) {
         $request->user()->sendEmailVerificationNotification();
      
-        return back()->with('success', 'Verifikasi email dikirim!');
+        return back()->with('success', 'Verifikasi Email Berhasil dikirim!');
     }
 
     public function indexForgotPass(){

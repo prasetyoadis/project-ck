@@ -47,7 +47,7 @@
                                 <input
                                     name="foto"
                                     id="foto"
-                                    class="account-file-input"
+                                    class="account-file-input @error('foto') is-invalid @enderror"
                                     type="file"
                                     accept="image/png, image/jpeg"
                                     hidden
@@ -57,13 +57,12 @@
                                 <i class="bx bx-reset d-block d-sm-none"></i>
                                 <span class="d-none d-sm-block">Reset</span>
                             </button>
-        
-                            <p class="text-muted mb-0 "><small>Allowed JPG or PNG. Max size of 1024KB</small></p>
-                            @error('username')
-                                <div class="invalid-feedback">
+                            @error('foto')
+                                <div class="w-100 text-danger">
                                     <small>{{ $message }}</small>        
                                 </div>
                             @enderror
+                            <p class="@error('foto') d-none @enderror text-muted mb-0"><small>Allowed JPG or PNG. Max size of 1024KB</small></p>
                         </div>
                     </div>
                     <div class="row">
@@ -133,7 +132,8 @@
                                     <input
                                         name="no_hp"
                                         type="tel"
-                                        class="form-control @error('no_hp') border border-start-0 border-danger rounded-end @enderror"
+                                        class="form-control @error('no_hp') is-invalid rounded-end @enderror"
+                                        @error('no_hp')style="border-right: 1px solid #ff3e1d"@enderror
                                         placeholder="8..."
                                         value="{{ $user->no_hp }}"
                                         onkeyup="numberOnly(this)"

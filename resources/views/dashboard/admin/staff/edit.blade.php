@@ -161,7 +161,8 @@
                                 <input
                                     name="no_hp"
                                     type="tel"
-                                    class="form-control @error('no_hp') border border-start-0 border-danger rounded-end @enderror"
+                                    class="form-control @error('no_hp') is-invalid rounded-end @enderror"
+                                    @error('no_hp')style="border-right: 1px solid #ff3e1d"@enderror
                                     placeholder="8..."
                                     value="{{ $user->no_hp }}"
                                     onkeyup="numberOnly(this)"

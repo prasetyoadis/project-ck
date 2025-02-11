@@ -69,30 +69,37 @@ Route::middleware(['auth'])->group(function (){
  **/
 Route::middleware(['auth', 'verified'])->group(function (){
     //Dashboard Menu
-    Route::get('admin/dashboard', [PageController::class, 'indexDashboard']);
-    Route::get('admin/settings', function(){
-        return view('layouts.misc-under-maintenance');
-    });
-    Route::resource('admin/staff', StaffController::class)
+    Route::get('/admin/dashboard', [PageController::class, 'indexDashboard']);
+
+    Route::resource('/admin/staff', StaffController::class)
         ->parameters(['staff' => 'user'])
         ->middleware('super');
-    Route::resource('admin/orders', OrderController::class);
+    Route::resource('/admin/orders', OrderController::class);
     Route::get('admin/invitations', function(){
         return view('layouts.misc-under-maintenance');
     });
-    Route::get('admin/themes', function(){
+    Route::get('/admin/themes', function(){
         return view('layouts.misc-under-maintenance');
     });
-    Route::get('admin/category-themes', function(){
+    Route::get('/admin/category-themes', function(){
         return view('layouts.misc-under-maintenance');
     });
-    Route::get('admin/riwayat-orders', function(){
+    Route::get('/admin/riwayat-orders', function(){
         return view('layouts.misc-under-maintenance');
     });
     
 });
 Route::middleware(['auth', 'verified'])->group(function (){
-    Route::get('admin/@{user}', [UserController::class, 'index']);
-    Route::get('admin/@{user}/edit', [UserController::class, 'edit']);
-    Route::put('admin/@{user}', [UserController::class, 'update']);
+    Route::get('/admin/@{user}', [UserController::class, 'index']);
+    Route::get('/admin/@{user}/edit', [UserController::class, 'edit']);
+    Route::put('/admin/@{user}', [UserController::class, 'update']);
+
+    Route::get('/admin/settings', function(){
+        return view('dashboard.settings', [
+            "title" => "Settings",
+        ]);
+    });
+    Route::post('/admin/settings/pass-confirm', [UserController::class, 'passConfirm']);
+    Route::post('/admin/settings/pass-edit', [UserController::class, 'passEdit']);
+    Route::post('/admin/settings/email-edit', [UserController::class, 'emailEdit']);
 });
