@@ -5,19 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Events extends Model
+class Story extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'undangan_id',
-        'nama_acara',
-        'tanggal',
-        'alamat',
-        'link_gmaps',
-    ];
+    protected $guarded = ['id'];
 
-    public function undangan() {
+    public function undangan()
+    {
         return $this->belongsTo(Undangan::class);
     }
 }

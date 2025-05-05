@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cpria', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('nama_ayah');
-            $table->string('nama_ibu');
+            $table->string('nama_category');
+            $table->string('slug');
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cpria');
+        Schema::dropIfExists('categories');
     }
 };

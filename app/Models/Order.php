@@ -28,11 +28,8 @@ class Order extends Model
         return $this->hasOne(Undangan::class);
     }
 
-    public function testimoni() {
-        return $this->belongsTo(Testimoni::class);
+    public function review() {
+        return $this->belongsTo(Review::class);
     }
 
-    public function templateUndangan() {
-        return $this->hasOne(Theme::class);
-    }
 }

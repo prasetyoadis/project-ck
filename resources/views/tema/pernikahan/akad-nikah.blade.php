@@ -3,16 +3,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> {{ $title }}</title>
+    <title>{{ $undangan->couple->nama_pria }} & {{ $undangan->couple->nama_wanita }}</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sacramento&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/simplyCountdown.theme.default.css"/>
+    <link rel="stylesheet" href="/assets/css/simplyCountdown.theme.default.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script src="../assets/js/simplyCountdown.min.js"></script>
-    <link rel="stylesheet" href="../assets/css/akad.css">
+    <script src="/assets/js/simplyCountdown.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/akad.css">
   </head>
 
   <body>
@@ -20,7 +20,7 @@
     <section id="hero" class="hero w-100 h-100 p-3 mx-auto text-center d-flex justify-content-center align-items-center text-white">
         <main>
             <h4>Kepada Bapak/Ibu/Saudara/i</h4>
-            <h1>Axel Giovanno & Michelle San</h1>
+            <h1>{{ str_replace("-", " ", $to) }}</h1>
             <p>Akan Melangsungkan Akad Nikah dan Resepsi dalam:</p>
             <div class="simply-countdown">
 
@@ -31,13 +31,13 @@
     
     <nav class="navbar navbar-expand-md bg-transparent sticky-top mynavbar">
       <div class="container">
-        <a class="navbar-brand" href="#">Axel & Michelle Wedding's</a>
+        <a class="navbar-brand" href="#">{{ strtok($undangan->couple->nama_pria, " ") }} & {{ strtok($undangan->couple->nama_wanita, " ") }} Wedding's</a>
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
           <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Axel & Michelle Wedding's</h5>
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">{{ $undangan->couple->nama_pria }} & {{ $undangan->couple->nama_wanita }} Wedding's</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
           <div class="offcanvas-body">
@@ -67,12 +67,12 @@
               <div class="col-lg-6">
                 <div class="row">
                   <div class="col-8 text-end">
-                    <h3>Axel Giovani Hartanto</h3>
+                    <h3>{{ $undangan->couple->nama_pria }}</h3>
                     <p>Putra Pertama dari</p>
-                    <p>Bpk Hartanto dan Ibu Hartanti </p>
+                    <p>Bpk {{ $undangan->couple->ayah_pria }} dan Ibu {{ $undangan->couple->ibu_pria }} </p>
                   </div>
                   <div class="col-4">
-                    <img src="assets/img/undangan/akad-nikah/boy.jpg" alt="Axel Giovani" width="300px" height="250px" class="img-responsive rounded-circle">
+                    <img src="/assets/img/undangan/akad-nikah/boy.jpg" alt="Axel Giovani" width="300px" height="250px" class="img-responsive rounded-circle">
                   </div>
                 </div>
               </div>
@@ -82,12 +82,12 @@
               <div class="col-lg-6">
                 <div class="row">
                   <div class="col-4">
-                    <img src="assets/img/undangan/akad-nikah/girl.jpg" alt="Michelle San" width="300px" height="250px" class="img-responsive rounded-circle">
+                    <img src="/assets/img/undangan/akad-nikah/girl.jpg" alt="Michelle San" width="300px" height="250px" class="img-responsive rounded-circle">
                   </div>
                   <div class="col-8">
-                    <h3>Michelle San</h3>
+                    <h3>{{ $undangan->couple->nama_wanita }}</h3>
                     <p>Putri Pertama dari</p>
-                    <p>Bapak Sakha San dan Ibu Liliana</p>
+                    <p>Bapak {{ $undangan->couple->ayah_wanita }} San dan Ibu {{ $undangan->couple->ibu_wanita }}</p>
                   </div>
                 </div>
               </div>
@@ -346,7 +346,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bs5-lightbox@1.8.3/dist/index.bundle.min.js"></script>
     <script>
     simplyCountdown('.simply-countdown', {
-      year: 2024, // required
+      year: 2025, // required
       month: 12, // required
       day: 12, // required
       hours: 8, // Default is 0 [0-23] integer

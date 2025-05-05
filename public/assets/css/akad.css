@@ -4,6 +4,7 @@
     --shadow: 0 2px 2px rgb(0 0 0 / 0.5);
   }
   body{
+    overflow-x: hidden;
     font-size: 1.2rem;
     font-family: "Work Sans", sans-serif;
     min-height: 4000px;
@@ -13,7 +14,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url("../img/undangan/akad-nikah/monokrom.jpg");
+    background-image: url("/assets/img/undangan/akad-nikah/monokrom.jpg");
   }
 
   .hero h1{
@@ -52,7 +53,7 @@
     color: #579ad1;
   }
   .home{
-    background-image: url('../img/undangan/akad-nikah/blue-floral.png');
+    background-image: url('/assets/img/undangan/akad-nikah/blue-floral.png');
     background-size: cover;
     min-height: 100vh;
     background-position: center;

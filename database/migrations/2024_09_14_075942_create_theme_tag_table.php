@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('theme_tag', function (Blueprint $table) {
+        Schema::create('tag_theme', function (Blueprint $table) {
             $table->id();
             $table->foreignId('theme_id');
             $table->foreignId('tag_id');
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('theme_tag');
+        Schema::dropIfExists('tag_theme');
     }
 };

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->date('tgl_bayar');
             $table->string('bukti_bayar');
             $table->timestamps();
-
         });
     }
 

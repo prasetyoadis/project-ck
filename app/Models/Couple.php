@@ -5,17 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cpria extends Model
+class Couple extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'nama',
-        'nm_ayah',
-        'nm_ibu',
-    ];
-
+    protected $guarded = ['id'];
+    
     public function undangan() {
-        return $this->belongsTo(Undangan::class);
+        return $this->hasOne(Undangan::class);
     }
 }

@@ -133,8 +133,8 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="card bg-info text-white mt-3 mt-lg-0 mb-3">
-                            <div class="card-header">Note:</div>
+                        <div class="card alert-warning text-dark mt-3 mt-lg-0 mb-3">
+                            <div class="card-header fw-semibold">Note:</div>
                             <div class="card-body">
                                 <span class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam culpa hic est optio natus officiis aut sint neque, quae sequi, qui quis ipsum perspiciatis ab a at quaerat magnam aperiam.</span>
                             </div>

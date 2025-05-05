@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Stories extends Model
+class Song extends Model
 {
     use HasFactory;
 
@@ -13,6 +13,6 @@ class Stories extends Model
 
     public function undangan()
     {
-        return $this->belongsTo(Undangan::class);
+        return $this->hasOne(Undangan::class);
     }
 }

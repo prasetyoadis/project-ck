@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Donation extends Model
 {
     use HasFactory;
-
+    
     protected $guarded = ['id'];
 
     public function bank() {
-        return $this->hasMany(Bank::class);
+        return $this->belongsTo(Bank::class);
     }
 
     public function undangan() {

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('rsvps', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('undangan_id');
             $table->string('nama');
             $table->string('ucapan')->nullable();
             $table->enum('kehadiran', ['hadir', 'tidak_hadir', 'belum_memutuskan']);

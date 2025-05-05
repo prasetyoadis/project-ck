@@ -31,7 +31,7 @@
               <div class="card-body">
                 <h5 class="card-title">Akad Nikah Sederhana</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn"><i class='bx bx-edit-alt'></i> Lihat Tema</a>
+                <a href="/katalog/akad-nikah/yudha-herni?to=Prasetyo-Adi" class="btn"><i class='bx bx-edit-alt'></i> Lihat Tema</a>
                 <a href="#" class="btn"><i class='bx bx-cart'></i> Pesan Tema</a>
               </div>
             </div>
@@ -42,7 +42,7 @@
               <div class="card-body">
                 <h5 class="card-title">Pemberkatan Gereja</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn"><i class='bx bx-edit-alt'></i>Lihat Tema</a>
+                <a href="/katalog/pemberkatan/yudha-herni?to=Prasetyo-Adi" class="btn"><i class='bx bx-edit-alt'></i>Lihat Tema</a>
                 <a href="#" class="btn"><i class='bx bx-cart'></i> Pesan Tema</a>
               </div>
             </div>

@@ -49,6 +49,11 @@ return [
             'root' => '/',
             'throw' => false,
         ],
+        'resource-view' => [
+            'driver' => 'local',
+            'root' => '/../resources/views/',
+            'throw' => false,
+        ],
         
         's3' => [
             'driver' => 's3',

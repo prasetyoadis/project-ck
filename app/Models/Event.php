@@ -5,17 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cwanita extends Model
+class Event extends Model
 {
     use HasFactory;
-
-    use HasFactory;
-
-    protected $fillable = [
-        'nama',
-        'nm_ayah',
-        'nm_ibu',
-    ];
+    
+    protected $guarded = ['id'];
 
     public function undangan() {
         return $this->belongsTo(Undangan::class);

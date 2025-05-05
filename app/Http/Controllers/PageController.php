@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Theme;
 use App\Models\Undangan;
 use Illuminate\Http\Request;
 
@@ -52,10 +53,15 @@ class PageController extends Controller
     /**
      * Display a listing of the katalog invitation.
      */
-    public function indexAkadNikah() {
+    public function indexDemoUndangan($slug ,Undangan $undangan, Request $request) {
+        $undangan = Undangan::with(['couple', 'song', 'theme'])->where('id', $undangan->id)->first();
+        // return $undangan;
         return view('/tema/pernikahan/akad-nikah', [
-            "title" => "Axel & Michi"
+            "title" => "Axel & Michelle",
+            "to" => $request->to,
+            "undangan" => $undangan,
         ]);
+
     }
 
     /**

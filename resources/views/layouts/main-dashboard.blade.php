@@ -37,8 +37,9 @@
 
         <!-- Vendors CSS -->
         <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-
         <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
 
         <!-- Page CSS -->
 
@@ -47,6 +48,7 @@
         <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
         <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
         <script src="/assets/js/config.js"></script>
+        @yield('stylecss')
     </head>
 
     <body>
@@ -85,18 +87,21 @@
 
         <!-- Core JS -->
         <!-- build:js assets/vendor/js/core.js -->
-
-        <script src="/assets/vendor/libs/jquery/jquery.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        {{-- <script src="/assets/vendor/libs/jquery/jquery.js"></script> --}}
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
         <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
         
         <script src="/assets/vendor/js/menu.js"></script>
         <!-- endbuild -->
-
+        
         <!-- Vendors JS -->
+        <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
-
+        
+        @yield('js')
         <!-- Main JS -->
         <script src="/assets/js/main.js"></script>
         {{-- <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script> --}}
@@ -106,7 +111,5 @@
 
         <!-- Place this tag in your head or just before your close body tag. -->
         <script async defer src="https://buttons.github.io/buttons.js"></script>
-
-    @yield('js')
     </body>
 </html>
