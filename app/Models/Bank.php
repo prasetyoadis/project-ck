@@ -9,12 +9,13 @@ class Bank extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'nama_bank',
-        'is_active',
-    ];
+    protected $guarded = ['id'];
 
-    public function donation() {
-        return $this->belongsTo(Donation::class);
+    public function getRouteKeyName(){
+        return 'code';
+    }
+
+    public function donations() {
+        return $this->hasMany(Donation::class);
     }
 }

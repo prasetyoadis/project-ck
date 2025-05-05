@@ -111,6 +111,24 @@
                 <div data-i18n="Analytics">Category Themes</div>
             </a>
         </li>
+        <li class="menu-item @if (Request::is('admin/tag-themes*')) active @endif">
+            <a href="/admin/tag-themes" class="menu-link">
+                <span class="material-symbols-rounded pe-2">tag</span>
+                <div data-i18n="Analytics">Tag Themes</div>
+            </a>
+        </li>
+        <li class="menu-item @if (Request::is('admin/songs*')) active @endif">
+            <a href="/admin/songs" class="menu-link">
+                <span class="material-symbols-rounded pe-2">library_music</span>
+                <div data-i18n="Analytics">Songs</div>
+            </a>
+        </li>
+        <li class="menu-item @if (Request::is('admin/banks*')) active @endif">
+            <a href="/admin/banks" class="menu-link">
+                <span class="material-symbols-rounded pe-2">account_balance</span>
+                <div data-i18n="Analytics">Banks</div>
+            </a>
+        </li>
       
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Riwayat</span>

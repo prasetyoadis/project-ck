@@ -9,51 +9,46 @@ class Undangan extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'order_id',
-        'cpria_id',
-        'cwanita_id',
-        'story',
-        'song',
-    ];
+    protected $guarded = ['id'];
+
+    public function getRouteKeyName(){
+        return 'slug';
+    }
 
     public function order()
     {
         return $this->belongsTo(Order::class);
     }
-
-    public function cpria()
-    {
-        return $this->hasOne(Cpria::class);
+    public function theme() {
+        return $this->belongsTo(Theme::class);
     }
-
-    public function cwanita()
+    public function couple()
     {
-        return $this->hasOne(Cwanita::class);
+        return $this->belongsTo(Couple::class);
     }
-
-    public function gallery()
+    public function song()
+    {
+        return $this->belongsTo(Song::class);
+    }
+    
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
+    public function galleries()
     {
         return $this->hasMany(Gallery::class);
     }
-
-    public function events()
+    public function stories()
     {
-        return $this->hasMany(Events::class);
+        return $this->hasMany(Story::class);
     }
-
-    public function rsvp()
-    {
-        return $this->hasMany(Rsvp::class);
-    }
-
-    public function donation()
+    public function donations()
     {
         return $this->hasMany(Donation::class);
     }
-
-    public function stories()
+    public function rsvps()
     {
-        return $this->hasMany(Stories::class);
+        return $this->hasMany(Rsvp::class);
     }
 }

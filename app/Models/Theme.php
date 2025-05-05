@@ -9,19 +9,20 @@ class Theme extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'theme',
-        'is_active',
-    ];
+    protected $guarded = ['id'];
 
-    public function order() {
-        return $this->belongsTo(Order::class);
+    public function getRouteKeyName(){
+        return 'slug';
+    }
+    
+    public function undangan() {
+        return $this->hasOne(Undangan::class);
     }
 
     public function category() {
         return $this->belongsTo(Category::class);
     }
-    public function tag() {
-        return $this->belongsToMany(Tag::class);
+    public function tags() {
+        return $this->belongsToMany(Tag::class)->withTimestamps();
     }
 }

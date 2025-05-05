@@ -21,8 +21,6 @@ return new class extends Migration
             $table->date('tgl_order');
             $table->enum('status', ['dp', 'lunas', 'batal'])->default('dp');
             $table->timestamps();
-
-
         });
     }
 

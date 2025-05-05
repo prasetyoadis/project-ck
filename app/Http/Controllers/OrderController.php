@@ -16,9 +16,10 @@ class OrderController extends Controller
     public function index()
     {
         //
+        // return Order::with(['payment', 'undangan'])->latest()->where('status', 'dp')->where('user_id', auth()->user()->id)->paginate(5)->appends(request()->all());
         return view('dashboard.admin.orders.index',[
             "title" => "Orders",
-            "orders" => Order::with('payment')->latest()->where('status', 'dp')->where('user_id', auth()->user()->id)->paginate(5)->appends(request()->all())
+            "orders" => Order::with(['payment', 'undangan'])->latest()->where('status', 'dp')->where('user_id', auth()->user()->id)->paginate(5)->appends(request()->all())
         ]);
     }
 

@@ -1,12 +1,19 @@
 <?php
 
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\StaffController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\PageController;
-use App\Http\Controllers\UserController;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BankController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CoupleController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SongController;
+use App\Http\Controllers\StaffController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\ThemeController;
+use App\Models\Song;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +35,7 @@ Route::get('/help', [PageController::class, 'indexHelp']);
 Route::get('/blog', [PageController::class, 'indexBlog']);
 Route::get('/testimoni', [PageController::class, 'indexTestimoni']);
 Route::get('/katalog', [PageController::class, 'indexKatalog']);
-Route::get('/katalog/akad-nikah', [PageController::class, 'indexAkadNikah']);
+Route::get('/katalog/{slug}/{undangan:slug}', [PageController::class, 'indexDemoUndangan'])->name('theme.demo');
 
 /*
  * Login & Logout Route
@@ -70,24 +77,53 @@ Route::middleware(['auth'])->group(function (){
 Route::middleware(['auth', 'verified'])->group(function (){
     //Dashboard Menu
     Route::get('/admin/dashboard', [PageController::class, 'indexDashboard']);
-
+    
     Route::resource('/admin/staff', StaffController::class)
         ->parameters(['staff' => 'user'])
+        ->except(['destroy', 'show'])
         ->middleware('super');
-    Route::resource('/admin/orders', OrderController::class);
-    Route::get('admin/invitations', function(){
-        return view('layouts.misc-under-maintenance');
-    });
-    Route::get('/admin/themes', function(){
-        return view('layouts.misc-under-maintenance');
-    });
-    Route::get('/admin/category-themes', function(){
-        return view('layouts.misc-under-maintenance');
-    });
+        
+    Route::resource('/admin/orders', OrderController::class)
+        ->except(['destroy', 'edit', 'show']);
+
+    Route::resource('/admin/invitations', PostController::class)
+        ->parameters(['invitations' => 'undangan']);
+
+    Route::put('/admin/invitations/couples/{couple:id}', [PostController::class, 'updateCouple']);
+    
+    Route::post('/admin/invitations/events', [PostController::class, 'storeEvents']);
+    Route::put('/admin/invitations/events/{event:id}', [PostController::class, 'updateEvent']);
+    
+    Route::post('/admin/invitations/stories', [PostController::class, 'storeStories']);
+    Route::put('/admin/invitations/stories/{story:id}', [PostController::class, 'updateStory']);
+    
+    Route::post('/admin/invitations/donations', [PostController::class, 'storeDonations']);
+    Route::put('/admin/invitations/donations/{donation:id}', [PostController::class, 'updateDonation']);
+    
+    Route::post('/admin/invitations/galleries', [PostController::class, 'storeGalleries']);
+    Route::put('/admin/invitations/galleries/{gallery:id}', [PostController::class, 'updateGallery']);
+    Route::get('/admin/invitations/galleries/return', [PostController::class, 'returnGallery'])
+        ->name('gallery.return');
+
+    Route::resource('/admin/themes', ThemeController::class);
+    /* Admin Tags Route Controll
+     */
+    Route::resource('/admin/tag-themes', TagController::class)
+    ->parameters(['tag-themes' => 'tag']);
+    Route::post("/admin/tag-themes/getData", [TagController::class, 'getTags'])
+    ->name('get-tags');
+    /* Admin Categories Route Controll
+     */ 
+    Route::resource('/admin/category-themes', CategoryController::class)
+    ->parameters(['category-themes' => 'category']);
+
     Route::get('/admin/riwayat-orders', function(){
         return view('layouts.misc-under-maintenance');
     });
     
+    Route::resource('/admin/songs', SongController::class);
+    
+    Route::resource('/admin/banks', BankController::class);
 });
 Route::middleware(['auth', 'verified'])->group(function (){
     Route::get('/admin/@{user}', [UserController::class, 'index']);

@@ -10,8 +10,12 @@ class Tag extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-
-    public function category() {
-        return $this->belongsToMany(Category::class);
+    
+    public function getRouteKeyName(){
+        return 'slug';
+    }
+    
+    public function theme() {
+        return $this->belongsToMany(Theme::class);
     }
 }

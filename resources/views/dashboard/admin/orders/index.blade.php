@@ -74,8 +74,8 @@
                             <th>Order ID</th>
                             <th>Nama Client</th>
                             <th>Tanggal Order</th>
-                            <th>Bukti</th>
                             <th>Status</th>
+                            <th>Bukti</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -86,10 +86,11 @@
                                     <td class="fw-bold">{{ $order->uuid }}</td>
                                     <td class="fw-bold">{{ $order->nama }}</td>
                                     <td>{{ $order->tgl_order }}</td>
+                                    <td><span class="badge bg-label-warning me-1">{{ $order->status }}</span>
                                     <td>
                                         <button
                                             type="button"
-                                            onclick="setBuktiDP('@if ($order->payment->count()){{ $order->payment[0]->bukti_bayar }}@endif')"
+                                            onclick="setBuktiDP('{{ ($order->payment->count()) ? $order->payment[0]->bukti_bayar : 'assets/img/elements/no-receipt.jpg' }}')"
                                             class="btn btn-sm btn-info"
                                             data-bs-toggle="modal"
                                             data-bs-target="#modalBukti"
@@ -97,8 +98,7 @@
                                         Tampilkan
                                         </button>
                                     </td>
-                                    <td>
-                                        <span class="badge bg-label-warning me-1">{{ $order->status }}</span>
+                                        
                                     </td>
                                     <td class="w-25">
                                         <button 
@@ -111,18 +111,15 @@
                                                 <span class="align-self-center">Hubungi Client</span>
                                             </div>
                                         </button>
-                                        <a href="/admin/invitations/create" class="btn btn-sm btn-primary">
+                                        @if ($order->undangan == null || $order->undangan->iscomplete == 0)
+                                        <a href="/admin/invitations/create?oid={{ $order->uuid }}@php if($order->undangan != null){echo "&uid=".$order->undangan->slug;}else{ echo "";} @endphp" class="btn btn-sm @php if($order->undangan != null){echo "btn-warning";}else{ echo "btn-primary";} @endphp">
                                             <div class="d-flex">
-                                                <span class="material-symbols-rounded me-1" style="font-size: 20px">post_add</span>
-                                                <span class="align-self-center">Post Undangan</span>
+                                                <span class="material-symbols-rounded me-1" style="font-size: 20px">@php if($order->undangan != null){echo "edit_document";}else{ echo "post_add";} @endphp</span>
+                                                <span class="align-self-center">@php if($order->undangan != null){echo "Lengkapi Data";}else{ echo "Post Undangan";} @endphp</span>
                                             </div>
                                         </a>
-                                        <button type="button" class="d-none btn btn-sm btn-warning">
-                                            <div class="d-flex">
-                                                <span class="material-symbols-rounded me-1" style="font-size: 20px">edit_square</span>
-                                                <span class="align-self-center">Edit Undangan</span>
-                                            </div>
-                                        </button>
+                                        @endif
+                                        
                                         <br>
                                         <button type="button" onclick="setOrderId('{{ $order->uuid }}')" class="btn btn-sm btn-success mt-1" data-bs-toggle="modal" data-bs-target="#modalLunas">
                                             <div class="d-flex">

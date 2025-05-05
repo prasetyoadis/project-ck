@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('undangans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id');
-            $table->foreignId('thame_id');
-            $table->foreignId('cpria_id');
-            $table->foreignId('cwanita_id');
-            $table->string('song');
+            $table->string('slug')->unique();
+            $table->foreignId('theme_id');
+            $table->foreignId('couple_id');
+            $table->foreignId('song_id');
+            $table->enum('iscomplete', ['0','1'])->default('0');
             $table->timestamps();
         });
     }
