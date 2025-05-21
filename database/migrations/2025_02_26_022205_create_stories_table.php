@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('undangan_id');
             $table->string('judul');
+            $table->dateTime('tgl_story');
             $table->text('deskripsi');
             $table->string('gambar');
             $table->timestamps();

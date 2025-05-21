@@ -49,6 +49,7 @@ return [
             'root' => '/',
             'throw' => false,
         ],
+        
         'resource-view' => [
             'driver' => 'local',
             'root' => '/../resources/views/',

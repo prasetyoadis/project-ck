@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Payment;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -51,17 +52,17 @@ class OrderController extends Controller
         //Jika Terdapat Request file foto
         if ($request->file('bukti_bayar')) {
             //Menyimpan Data File foto Pada Directory Public Web dan Isi dataValid dengan Path Lokasi Gambar
-            $dataPayment['bukti_bayar'] = Storage::disk('public-web')->put('img/payments', $request->file('bukti_bayar'));
+            // $dataPayment['bukti_bayar'] = Storage::disk('public-web')->put('img/payments', $request->file('bukti_bayar'));
             /**
              * Jika Mau di upload di hosting bisa pakai
              *
              * @param use Illuminate\Support\Str;
              *
-             * $foto = $request->file('foto');
-             * $foto_nama =  $gambar_nama =  Str::random(40). '.'. $request->file('foto')->getClientOriginalExtension();
-             * $dataValid['foto'] = 'img/users/'. $foto_nama;
-             * $foto->move('img/users', $foto_nama);
              */
+             $foto = $request->file('bukti_bayar');
+             $foto_nama = Str::random(40). '.'. $request->file('bukti_bayar')->getClientOriginalExtension();
+             $dataPayment['bukti_bayar'] = 'img/payments/'. $foto_nama;
+             $foto->move('img/payments/', $foto_nama);
         }
         
         $dataValid['user_id'] = auth()->user()->id;
@@ -112,7 +113,7 @@ class OrderController extends Controller
                 //Mengupdate status Order
                 Order::where('id', $order->id)->update(['status' => 'lunas']);
         
-                //Redirect Halaman Admin Menu Transaksi Buku dengan get URL u=kd_anggota
+                //Redirect Halaman Admin Menu Order dengan pesan success
                 return redirect('/admin/orders')->with('success', 'Orders Telah Lunas');
                 break;
             case 'pembatalan':

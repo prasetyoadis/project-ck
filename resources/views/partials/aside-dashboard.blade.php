@@ -99,6 +99,11 @@
                 <div data-i18n="Analytics">Post Undangan</div>
             </a>
         </li>
+        
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Master Data</span>
+        </li>
+
         <li class="menu-item @if (Request::is('admin/themes*')) active @endif">
             <a href="/admin/themes" class="menu-link">
                 <span class="material-symbols-rounded pe-2">palette</span>
@@ -117,6 +122,7 @@
                 <div data-i18n="Analytics">Tag Themes</div>
             </a>
         </li>
+
         <li class="menu-item @if (Request::is('admin/songs*')) active @endif">
             <a href="/admin/songs" class="menu-link">
                 <span class="material-symbols-rounded pe-2">library_music</span>
