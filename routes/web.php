@@ -78,19 +78,16 @@ Route::middleware(['auth', 'verified'])->group(function (){
     /* Admin Dashboard Route Controll
      */
     Route::get('/admin/dashboard', [PageController::class, 'indexDashboard']);
-    
     /* Admin Staff users Route Controll
      */
     Route::resource('/admin/staff', StaffController::class)
         ->parameters(['staff' => 'user'])
         ->except(['destroy', 'show'])
         ->middleware('super');
-    
     /* Admin Orders Route Controll
      */
     Route::resource('/admin/orders', OrderController::class)
         ->except(['destroy', 'edit', 'show']);
-
     /* Admin Undangan Route Controll
      */
     Route::resource('/admin/invitations', PostController::class)
@@ -112,18 +109,16 @@ Route::middleware(['auth', 'verified'])->group(function (){
     Route::put('/admin/invitations/galleries/{gallery:id}', [PostController::class, 'updateGallery']);
     Route::get('/admin/invitations/galleries/return', [PostController::class, 'returnGallery'])
         ->name('gallery.return');
-
     /* Admin Themes Route Controll
      */
     Route::resource('/admin/themes', ThemeController::class)
         ->except(['destroy']);
-
     /* Admin Tags Route Controll
      */
-    // Route::resource('/admin/tag-themes', TagController::class)
-    //     ->parameters(['tag-themes' => 'tag']);
-    // Route::post("/admin/tag-themes/getData", [TagController::class, 'getTags'])
-    //     ->name('get-tags');
+    Route::resource('/admin/tag-themes', TagController::class)
+        ->parameters(['tag-themes' => 'tag']);
+    Route::post("/admin/tag-themes/getData", [TagController::class, 'getTags'])
+        ->name('get-tags');
     /* Admin Categories Route Controll
      */ 
     // Route::resource('/admin/category-themes', CategoryController::class)
