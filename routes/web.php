@@ -35,7 +35,7 @@ Route::get('/help', [PageController::class, 'indexHelp']);
 Route::get('/blog', [PageController::class, 'indexBlog']);
 Route::get('/testimoni', [PageController::class, 'indexTestimoni']);
 Route::get('/katalog', [PageController::class, 'indexKatalog']);
-Route::get('/katalog/{slug}/{undangan:slug}', [PageController::class, 'indexDemoUndangan'])->name('theme.demo');
+Route::get('/katalog/{theme:slug}', [PageController::class, 'indexDemoUndangan'])->name('theme.demo');
 
 /*
  * Login & Logout Route
@@ -75,20 +75,28 @@ Route::middleware(['auth'])->group(function (){
  * Backend Route
  **/
 Route::middleware(['auth', 'verified'])->group(function (){
-    //Dashboard Menu
+    /* Admin Dashboard Route Controll
+     */
     Route::get('/admin/dashboard', [PageController::class, 'indexDashboard']);
     
+    /* Admin Staff users Route Controll
+     */
     Route::resource('/admin/staff', StaffController::class)
         ->parameters(['staff' => 'user'])
         ->except(['destroy', 'show'])
         ->middleware('super');
-        
+    
+    /* Admin Orders Route Controll
+     */
     Route::resource('/admin/orders', OrderController::class)
         ->except(['destroy', 'edit', 'show']);
 
+    /* Admin Undangan Route Controll
+     */
     Route::resource('/admin/invitations', PostController::class)
-        ->parameters(['invitations' => 'undangan']);
-
+        ->parameters(['invitations' => 'undangan'])
+        ->except(['show', 'edit']);
+    
     Route::put('/admin/invitations/couples/{couple:id}', [PostController::class, 'updateCouple']);
     
     Route::post('/admin/invitations/events', [PostController::class, 'storeEvents']);
@@ -105,36 +113,40 @@ Route::middleware(['auth', 'verified'])->group(function (){
     Route::get('/admin/invitations/galleries/return', [PostController::class, 'returnGallery'])
         ->name('gallery.return');
 
-    Route::resource('/admin/themes', ThemeController::class);
+    /* Admin Themes Route Controll
+     */
+    Route::resource('/admin/themes', ThemeController::class)
+        ->except(['destroy']);
+
     /* Admin Tags Route Controll
      */
-    Route::resource('/admin/tag-themes', TagController::class)
-    ->parameters(['tag-themes' => 'tag']);
-    Route::post("/admin/tag-themes/getData", [TagController::class, 'getTags'])
-    ->name('get-tags');
+    // Route::resource('/admin/tag-themes', TagController::class)
+    //     ->parameters(['tag-themes' => 'tag']);
+    // Route::post("/admin/tag-themes/getData", [TagController::class, 'getTags'])
+    //     ->name('get-tags');
     /* Admin Categories Route Controll
      */ 
-    Route::resource('/admin/category-themes', CategoryController::class)
-    ->parameters(['category-themes' => 'category']);
+    // Route::resource('/admin/category-themes', CategoryController::class)
+    //     ->parameters(['category-themes' => 'category']);
 
     Route::get('/admin/riwayat-orders', function(){
         return view('layouts.misc-under-maintenance');
     });
     
-    Route::resource('/admin/songs', SongController::class);
+    // Route::resource('/admin/songs', SongController::class);
     
-    Route::resource('/admin/banks', BankController::class);
+    // Route::resource('/admin/banks', BankController::class);
 });
 Route::middleware(['auth', 'verified'])->group(function (){
+    /* User Profil Route Controll
+     */
     Route::get('/admin/@{user}', [UserController::class, 'index']);
     Route::get('/admin/@{user}/edit', [UserController::class, 'edit']);
     Route::put('/admin/@{user}', [UserController::class, 'update']);
 
-    Route::get('/admin/settings', function(){
-        return view('dashboard.settings', [
-            "title" => "Settings",
-        ]);
-    });
+    /* User Settings Route Controll
+     */
+    Route::get('/admin/settings', [PageController::class, 'indexSettings']);
     Route::post('/admin/settings/pass-confirm', [UserController::class, 'passConfirm']);
     Route::post('/admin/settings/pass-edit', [UserController::class, 'passEdit']);
     Route::post('/admin/settings/email-edit', [UserController::class, 'emailEdit']);
