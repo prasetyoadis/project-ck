@@ -195,7 +195,7 @@ class ThemeController extends Controller
         $theme->tags()->sync($request->input('tags', []));
         
         //Redirect Halaman Admin Menu Themes dengan pesan success
-        return redirect('/admin/themes')->with('success', 'Theme Telah diedit');
+        return redirect('/admin/themes')->with('success', 'Data Theme Berhasil diedit');
     }
 
     /**
