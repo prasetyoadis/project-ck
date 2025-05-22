@@ -116,14 +116,17 @@ Route::middleware(['auth', 'verified'])->group(function (){
     /* Admin Tags Route Controll
      */
     Route::resource('/admin/tag-themes', TagController::class)
-        ->parameters(['tag-themes' => 'tag']);
+        ->parameters(['tag-themes' => 'tag'])
+        ->except(['show']);
     Route::post("/admin/tag-themes/getData", [TagController::class, 'getTags'])
         ->name('get-tags');
     /* Admin Categories Route Controll
      */ 
-    // Route::resource('/admin/category-themes', CategoryController::class)
-    //     ->parameters(['category-themes' => 'category']);
-
+    Route::resource('/admin/category-themes', CategoryController::class)
+        ->parameters(['category-themes' => 'category'])
+        ->except(['show']);
+    /* Admin riwayat Route Controll
+     */ 
     Route::get('/admin/riwayat-orders', function(){
         return view('layouts.misc-under-maintenance');
     });

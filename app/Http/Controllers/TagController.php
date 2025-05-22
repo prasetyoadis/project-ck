@@ -94,5 +94,8 @@ class TagController extends Controller
     public function destroy(Tag $tag)
     {
         //
+        Tag::destroy($tag->id);
+
+        return redirect('/admin/tag-themes')->with('success', 'Data Tag Berhasil Dihapus');
     }
 }
