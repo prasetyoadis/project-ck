@@ -18,10 +18,10 @@
 <!-- Hoverable Table rows -->
     <div class="card">
         <div class="card-header">
-            <a class="btn btn-primary" href="/admin/tag-themes/create">
+            <a class="btn btn-primary" href="/admin/category-themes/create">
                 <div class="d-flex align-item-center">
-                    <span class="material-symbols-rounded me-1">new_label</span>
-                    <span>Add Tag</span>
+                    <span class="material-symbols-rounded me-1">add</span>
+                    <span>Add Category</span>
                 </div>
             </a>
             @if (session()->has('success'))
@@ -74,27 +74,27 @@
                             <thead>
                                 <tr>
                                     <th scope="col" style="width: 5%">#</th>
-                                    <th>Nama Tag</th>
+                                    <th>Nama Category</th>
                                     <th style="width: 25%">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
-                                @if ($tags->count())
-                                    @foreach ($tags as $tag)
+                                @if ($categories->count())
+                                    @foreach ($categories as $category)
                                         <tr>
                                             <td scope="row">{{ $loop->iteration }}</td>
-                                            <td class="fw-bold">{{ $tag->nama_tag }}</td>
+                                            <td class="fw-bold">{{ $category->nama_category }}</td>
                                             <td>
-                                                <a href="/admin/tag-themes/{{ $tag->slug }}/edit" class="btn btn-sm btn-warning">
+                                                <a href="/admin/category-themes/{{ $category->slug }}/edit" class="btn btn-sm btn-warning">
                                                     <div class="d-flex">
                                                         <span class="material-symbols-rounded me-1" style="font-size: 20px">edit_square</span>
                                                         <span class="align-self-center">Edit Data</span>
                                                     </div>
                                                 </a>
-                                                <form action="/admin/tags/{{ $tag->slug }}" method="post" class="d-inline">
+                                                <form action="/admin/categories/{{ $category->slug }}" method="post" class="d-inline">
                                                     @csrf
                                                     @method('delete')
-                                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin Membatalkan Data Tag Ini?\nPastikan data tag ini tidak berelasi dengan tema manapun.')">
+                                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin Menghapus Data Category Ini?\nPastikan data category ini tidak berelasi dengan tema manapun.')">
                                                         <div class="d-flex">
                                                             <span class="material-symbols-rounded me-1" style="font-size:20px">delete</span>
                                                             <span class="align-self-center">Hapus</span>
@@ -105,15 +105,15 @@
                                         </tr>
                                     @endforeach
                                 @else
-                                        <tr>
-                                            <td scope="row" colspan="3" class="text-center">Data Tag Tidak Ditemukan..</td>
-                                        </tr>
+                                    <tr>
+                                        <td scope="row" colspan="3" class="text-center">Data Category Tidak Ditemukan..</td>
+                                    </tr>
                                 @endif
                             </tbody>
                         </table>
                     </div>
                     <div class="mt-2">
-                        {{ $tags->links('vendor.pagination.bootstrap-5') }}
+                        {{ $categories->links('vendor.pagination.bootstrap-5') }}
                     </div>
                 </div>
             </div>
