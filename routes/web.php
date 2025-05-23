@@ -125,6 +125,9 @@ Route::middleware(['auth', 'verified'])->group(function (){
     Route::resource('/admin/category-themes', CategoryController::class)
         ->parameters(['category-themes' => 'category'])
         ->except(['show']);
+    /* Admin banks Route Controll
+        */ 
+    Route::resource('/admin/banks', BankController::class);
     /* Admin riwayat Route Controll
      */ 
     Route::get('/admin/riwayat-orders', function(){
@@ -132,8 +135,6 @@ Route::middleware(['auth', 'verified'])->group(function (){
     });
     
     // Route::resource('/admin/songs', SongController::class);
-    
-    // Route::resource('/admin/banks', BankController::class);
 });
 Route::middleware(['auth', 'verified'])->group(function (){
     /* User Profil Route Controll
