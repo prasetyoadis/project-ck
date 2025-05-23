@@ -127,7 +127,8 @@ Route::middleware(['auth', 'verified'])->group(function (){
         ->except(['show']);
     /* Admin banks Route Controll
         */ 
-    Route::resource('/admin/banks', BankController::class);
+    Route::resource('/admin/banks', BankController::class)
+        ->except(['destroy', 'show']);
     /* Admin riwayat Route Controll
      */ 
     Route::get('/admin/riwayat-orders', function(){
