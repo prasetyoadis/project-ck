@@ -11,6 +11,10 @@ class Song extends Model
 
     protected $guarded = ['id'];
 
+    public function getRouteKeyName(){
+        return 'uuid';
+    }
+
     public function undangan()
     {
         return $this->hasOne(Undangan::class);

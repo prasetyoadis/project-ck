@@ -75,20 +75,20 @@ Route::middleware(['auth'])->group(function (){
  * Backend Route
  **/
 Route::middleware(['auth', 'verified'])->group(function (){
-    /* Admin Dashboard Route Controll
-     */
+/* Admin Dashboard Route Controll
+    */
     Route::get('/admin/dashboard', [PageController::class, 'indexDashboard']);
-    /* Admin Staff users Route Controll
+/* Admin Staff users Route Controll
      */
     Route::resource('/admin/staff', StaffController::class)
         ->parameters(['staff' => 'user'])
         ->except(['destroy', 'show'])
         ->middleware('super');
-    /* Admin Orders Route Controll
+/* Admin Orders Route Controll
      */
     Route::resource('/admin/orders', OrderController::class)
         ->except(['destroy', 'edit', 'show']);
-    /* Admin Undangan Route Controll
+/* Admin Undangan Route Controll
      */
     Route::resource('/admin/invitations', PostController::class)
         ->parameters(['invitations' => 'undangan'])
@@ -109,33 +109,34 @@ Route::middleware(['auth', 'verified'])->group(function (){
     Route::put('/admin/invitations/galleries/{gallery:id}', [PostController::class, 'updateGallery']);
     Route::get('/admin/invitations/galleries/return', [PostController::class, 'returnGallery'])
         ->name('gallery.return');
-    /* Admin Themes Route Controll
+/* Admin Themes Route Controll
      */
     Route::resource('/admin/themes', ThemeController::class)
         ->except(['destroy']);
-    /* Admin Tags Route Controll
-     */
+/* Admin Categories Route Controll
+    */ 
+    Route::resource('/admin/category-themes', CategoryController::class)
+        ->parameters(['category-themes' => 'category'])
+        ->except(['show']);
+/* Admin Tags Route Controll
+        */
     Route::resource('/admin/tag-themes', TagController::class)
         ->parameters(['tag-themes' => 'tag'])
         ->except(['show']);
     Route::post("/admin/tag-themes/getData", [TagController::class, 'getTags'])
         ->name('get-tags');
-    /* Admin Categories Route Controll
-     */ 
-    Route::resource('/admin/category-themes', CategoryController::class)
-        ->parameters(['category-themes' => 'category'])
-        ->except(['show']);
-    /* Admin banks Route Controll
+/* Admin Songs Route Controll
+        */ 
+    Route::resource('/admin/songs', SongController::class);
+/* Admin banks Route Controll
         */ 
     Route::resource('/admin/banks', BankController::class)
         ->except(['destroy', 'show']);
-    /* Admin riwayat Route Controll
+/* Admin riwayat Route Controll
      */ 
     Route::get('/admin/riwayat-orders', function(){
         return view('layouts.misc-under-maintenance');
     });
-    
-    // Route::resource('/admin/songs', SongController::class);
 });
 Route::middleware(['auth', 'verified'])->group(function (){
     /* User Profil Route Controll

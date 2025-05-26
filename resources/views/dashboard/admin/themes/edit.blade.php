@@ -161,10 +161,10 @@
                 <div class="row">
                     <div class="col-lg-9">
                         <div class="row">
-                            <div class="card col-12 col-sm-6 mb-3 mb-sm-0">
+                            <div id="col-iframe" class="card col-12 col-md-6 mb-3 mb-sm-0">
                                 <iframe src="/katalog/{{ $theme->slug }}?to=Prasetyo-Adi" height="500px" width="100%" title="{{ $title }}"></iframe>
                             </div>
-                            <div class="col-12 col-sm-6">
+                            <div id="col-form-edit" class="col-12 col-md-6">
                                 <div class="mb-3">
                                     <label for="nama_tag" class="form-label">Nama Tema</label>
                                     <input
@@ -189,6 +189,7 @@
                                             class="form-control @error('blade_file') is-invalid @enderror"
                                             type="file"
                                             accept=".blade.php"
+                                            onchange="fileChosen(this)"
                                         />
                                         @error('blade_file')
                                             <div class="invalid-feedback">
@@ -282,7 +283,7 @@
         $('.select-search').one('select2:open', function(e) {
             $('input.select2-search__field').prop('placeholder', 'Search..');
         });
-
+        
         $("#tags").select2({
             // tags: true,
             multiple: true,
@@ -316,10 +317,17 @@
 
         var old = {!! json_encode(["category_id" => old('category_id')]) !!}
         var data = {!! json_encode($theme->category_id) !!}
+        
+        $('.select-search').each(function () {
+            $(this).select2({
+                dropdownParent: $(this).parent(),// fix select2 search input focus bug
+            })
+        });
+        
         // Set Selected data to el Select2
         $('#select-category').val(old.category_id ?? data).trigger("change");
     };
-
+    
     var select2label;
 
     $("#form-theme").validate({
@@ -363,6 +371,27 @@
     function noSymbol(input) {
         var regex = /[^a-zA-Z0-9 \n\t]/gi;
         input.value = input.value.replace(regex, "");
+    }
+
+    function fileChosen(el) {
+        const iframe = document.getElementById("col-iframe");
+        const form = document.getElementById("col-form-edit");
+        
+        iframe.remove();
+        form.classList.remove('col-md-6');
+
+        $(document).ready(function(){
+            $('.select-search').each(function () {
+                $(this).select2({
+                    dropdownParent: $(this).parent(),// fix select2 search input focus bug
+                })
+            });
+            $('#tags').each(function () {
+                $(this).select2({
+                    dropdownParent: $(this).parent(),// fix select2 search input focus bug
+                })
+            });
+        });
     }
 </script>
 @endsection

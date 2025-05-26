@@ -136,6 +136,8 @@ class ThemeController extends Controller
     public function update(Request $request, Theme $theme)
     {
         //rules of form input
+        $theme = Theme::with('category')->firstWhere('id', $theme->id);
+
         $rules = [
             'nama_tema' => 'required',
             'category_id' => 'required|not_in:"-- Pilih Kategori --',
@@ -161,25 +163,32 @@ class ThemeController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         }
-
+        //ambil kategori slug baru
         $category = Category::where('id', $request->category_id)->first();
-        $PATH_VIEWS = resource_path('views'). '/tema/'. $category->slug. '/';
+        
+        $PATH_OLD = resource_path('views'). '/tema/'. $theme->category->slug. '/';
+        $old_name = $theme->slug. '.blade.php';
 
-        //jika tidak ada file baru namun nama slug diganti lakukan rename file .blade.php dengan new slug
-        if ($request->slug != $theme->slug) {
-            $old_name = $theme->slug. '.blade.php';
-            $new_name = $request->slug. '.blade.php';
-
-            //rename file with new slug
-            rename($PATH_VIEWS. $old_name, $PATH_VIEWS. $new_name);
-        }
         $file = $request->file('blade_file');
 
         //Jika Terdapat Request file blade.php
         if ($file) {
-            Storage::disk('public-web')->delete($PATH_VIEWS. $theme->slug. '.blade.php');
+            $category_now = ($request->category_id != $theme->category_id) ? $category->slug : $theme->category->slug;
+
+            Storage::disk('public-web')->delete(resource_path('views'). '/tema/'. $theme->category->slug. '/'. $theme->slug. '.blade.php');
             // Simpan file jika semua valid
-            $file->move($PATH_VIEWS, $request->slug. '.blade.php');
+            $file->move(resource_path('views'). '/tema/'. $category_now. '/', $request->slug. '.blade.php');
+        }else {
+            //jika tidak ada file baru namun nama slug OR category diganti lakukan rename file.blade.php dengan new category OR slug
+            if ($request->category_id != $theme->category_id || $request->slug != $theme->slug) {
+                # code...
+                $PATH_NEW = resource_path('views'). '/tema/'. $category->slug. '/';
+
+                $new_name = $request->slug. '.blade.php';
+
+                rename($PATH_OLD. $old_name, $PATH_NEW. $new_name);
+
+            }
         }
 
         // Retrieve the validated input...
