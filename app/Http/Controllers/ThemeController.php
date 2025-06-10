@@ -15,12 +15,16 @@ class ThemeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        //set limit value from request or default is 5
+        $limit = $request->input('limit', 5);
+
         return view('dashboard.admin.themes.index', [
             "title" => "Themes",
-            "themes" => Theme::with(['tags', 'category'])->with('category')->latest()->paginate(5)->appends(request()->all()),
+            "themes" => Theme::with(['tags', 'category'])->filter(request(['search', 'category', 'tag']))->latest()->paginate($limit)->appends(request()->all()),
+            "limit" => $limit,
         ]);
     }
 

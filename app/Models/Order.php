@@ -11,9 +11,19 @@ class Order extends Model
 
     protected $guarded = ['id'];
 
-    //Route Model Binding
+    // Route Model Binding
     public function getRouteKeyName(){
         return 'uuid';
+    }
+
+    // Search
+    public function scopeFilter($query, array $filters){
+        $query->when($filters['search'] ?? false, function($query, $s){
+            return $query->where(function($query) use ($s) {
+                $query->where('nama', 'like', '%' . $s . '%')
+                      ->orWhereRelation('order', 'uuid', 'like', '%' . $s . '%');
+            });
+        });
     }
 
     public function user() {

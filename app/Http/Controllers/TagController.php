@@ -10,12 +10,16 @@ class TagController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        //set limit value from request or default is 5
+        $limit = $request->input('limit', 5);
+
         return view('dashboard.admin.tags.index', [
             "title" => "Tag Themes",
-            "tags" => Tag::latest()->paginate(5)->appends(request()->all()),
+            "tags" => Tag::filter(request(['search']))->latest()->paginate($limit)->appends(request()->all()),
+            "limit" => $limit,
         ]);
     }
 

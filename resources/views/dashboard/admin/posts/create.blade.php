@@ -1,4 +1,4 @@
-@extends('layouts.main-dashboard')
+@extends('dashboard.layouts.main')
 
 @section('stylecss')
     {{-- <meta name="csrf-token" content="{{ csrf_token() }}">  --}}

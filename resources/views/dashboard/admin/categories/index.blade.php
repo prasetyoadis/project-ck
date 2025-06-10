@@ -1,4 +1,4 @@
-@extends('layouts.main-dashboard')
+@extends('dashboard.layouts.main')
 
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
@@ -40,31 +40,10 @@
         <div class="card-body">
             <div class="d-flex mb-2">
                 <div class="d-flex flex-grow-1">
-                    <p class="align-self-center m-0">Show</p>
-                    <select class="form-select mx-2" style="width: 4.5em" id="exampleFormControlSelect1" aria-label="Default select example">
-                        <option value="5" selected>5</option>
-                        <option value="10">10</option>
-                        <option value="15">15</option>
-                        <option value="20">25</option>
-                    </select>
-                    <p class="align-self-center m-0">entries</p>
+                    @include('dashboard.partials.limit-table-entries')
                 </div>
                 <div>
-                    <form action="">
-                        @csrf
-                        <div class="input-group">
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Search.."
-                                aria-label="Search.."
-                                aria-describedby="Search box"
-                            />
-                            <button class="btn btn-icon btn-outline-primary" type="submit" id="button-addon2">
-                                <span class="material-symbols-rounded">search</span>
-                            </button>
-                        </div>
-                    </form>
+                    @include('dashboard.partials.search')
                 </div>
             </div>
             <div class="row">

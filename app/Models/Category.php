@@ -15,6 +15,15 @@ class Category extends Model
         return 'slug';
     }
 
+    // Search
+    public function scopeFilter($query, array $filters){
+        $query->when($filters['search'] ?? false, function($query, $s){
+            return $query->where(function($query) use ($s) {
+                $query->where('nama_category', 'like', '%' . $s . '%');
+            });
+        });
+    }
+
     public function theme()
     {
         return $this->hasMany(Theme::class);

@@ -12,12 +12,16 @@ class SongController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        //set limit value from request or default is 5
+        $limit = $request->input('limit', 5);
+
         return view('dashboard.admin.songs.index', [
-            "songs" => Song::latest()->paginate(5)->appends(request()->all()),
             "title" => "Songs",
+            "songs" => Song::filter(request(['search']))->latest()->paginate($limit)->appends(request()->all()),
+            "limit" => $limit,
         ]);
     }
 

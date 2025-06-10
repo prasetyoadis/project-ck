@@ -15,6 +15,16 @@ class Undangan extends Model
         return 'slug';
     }
 
+    // Search
+    public function scopeFilter($query, array $filters){
+        $query->when($filters['search'] ?? false, function($query, $s){
+            return $query->where(function($query) use ($s) {
+                $query->where('uuid', 'like', '%' . $s . '%')
+                      ->orWhere('nama', 'like', '%' . $s . '%');
+            });
+        });
+    }
+
     public function order()
     {
         return $this->belongsTo(Order::class);

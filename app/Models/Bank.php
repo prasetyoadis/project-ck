@@ -15,6 +15,15 @@ class Bank extends Model
         return 'code';
     }
 
+    // Search
+    public function scopeFilter($query, array $filters){
+        $query->when($filters['search'] ?? false, function($query, $s){
+            return $query->where(function($query) use ($s) {
+                $query->where('nama_bank', 'like', '%' . $s . '%');
+            });
+        });
+    }
+
     public function donations() {
         return $this->hasMany(Donation::class);
     }
