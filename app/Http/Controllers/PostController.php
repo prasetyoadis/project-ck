@@ -20,10 +20,17 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        return view('layouts.misc-under-maintenance');
+        //set limit value from request or default is 5
+        $limit = $request->input('limit', 5);
+        
+        return view('dashboard.admin.posts.index',[
+            "title" => "Undangan",
+            "posts" => Undangan::with(['order', 'theme', 'events'])->filter(request(['search']))->latest()->whereRelation('order', 'user_id', auth()->user()->id)->paginate($limit)->appends(request()->all()),
+            "limit" => $limit,
+        ]);
     }
 
     /**

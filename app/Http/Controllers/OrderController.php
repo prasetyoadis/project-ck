@@ -14,13 +14,16 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        // return Order::with(['payment', 'undangan'])->latest()->where('status', 'dp')->where('user_id', auth()->user()->id)->paginate(5)->appends(request()->all());
+        //set limit value from request or default is 5
+        $limit = $request->input('limit', 5);
+        
         return view('dashboard.admin.orders.index',[
             "title" => "Orders",
-            "orders" => Order::with(['payment', 'undangan'])->latest()->where('status', 'dp')->where('user_id', auth()->user()->id)->paginate(5)->appends(request()->all())
+            "orders" => Order::with(['payment', 'undangan'])->filter(request(['search']))->latest()->where('status', 'dp')->where('user_id', auth()->user()->id)->paginate($limit)->appends(request()->all()),
+            "limit" => $limit,
         ]);
     }
 

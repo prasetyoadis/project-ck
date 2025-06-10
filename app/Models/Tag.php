@@ -15,6 +15,15 @@ class Tag extends Model
         return 'slug';
     }
     
+    // Search
+    public function scopeFilter($query, array $filters){
+        $query->when($filters['search'] ?? false, function($query, $s){
+            return $query->where(function($query) use ($s) {
+                $query->where('nama_tag', 'like', '%' . $s . '%');
+            });
+        });
+    }
+
     public function theme() {
         return $this->belongsToMany(Theme::class);
     }

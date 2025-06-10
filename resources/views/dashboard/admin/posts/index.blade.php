@@ -1,4 +1,4 @@
-@extends('layouts.main-dashboard')
+@extends('dashboard.layouts.main')
 
 @section('content')
 
@@ -23,59 +23,40 @@
         <div class="card-body">
             <div class="d-flex mb-2">
                 <div class="d-flex flex-grow-1">
-                    <p class="align-self-center m-0">Show</p>
-                    <select class="form-select mx-2" style="width: 4.5em" id="exampleFormControlSelect1" aria-label="Default select example">
-                        <option value="5" selected>5</option>
-                        <option value="10">10</option>
-                        <option value="15">15</option>
-                        <option value="20">25</option>
-                    </select>
-                    <p class="align-self-center m-0">entries</p>
+                    @include('dashboard.partials.limit-table-entries')
                 </div>
                 <div>
-                    <form action="">
-                        @csrf
-                        <div class="input-group">
-                            <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Search.."
-                            aria-label="Search.."
-                            aria-describedby="Search box"
-                            />
-                            <button class="btn btn-icon btn-outline-primary" type="submit" id="button-addon2">
-                                <span class="material-symbols-rounded">search</span>
-                            </button>
-                        </div>
-                    </form>
+                    @include('dashboard.partials.search')
                 </div>
             </div>
             <div class="table-responsive text-nowrap">
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Order ID</th>
                             <th>Slug</th>
-                            <th>Tanggal Order</th>
-                            <th>Status</th>
+                            <th>Tema</th>
+                            <th>Tgl Acara</th>
+                            <th>Preview</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                    @if ($orders->count())
-                        @foreach ($orders as $order)
+                        @if ($posts->isNotEmpty())
+                        @foreach ($posts as $post)
                         <tr>
-                            <td class="fw-bold">{{ $order->uuid }}</td>
-                            <td class="fw-bold">{{ $order->nama }}</td>
-                            <td>{{ $order->tgl_order }}</td>
-                            <td>sadfafsa</td>
+                            <td scope="row">{{ $loop->iteration }}</td>
+                            <td class="fw-bold">{{ $post->order->uuid }}</td>
+                            <td class="fw-bold">{{ $post->slug }}</td>
+                            <td>{{ $post->theme->nama_tema }}</td>
+                            <td>{{ $post->events[0]->tgl_acara }}</td>
                             <td>
-                                <span class="badge bg-label-warning me-1">{{ $order->status }}</span>
-                            </td>
+                                <a class="btn btn-sm btn-info" href="/{{ $post->slug }}?to={{ str_replace(' ', '-', auth()->user()->name) }}">Tampilkan</a></td>
                             <td class="w-25">
                                 <button 
                                     type="button"
-                                    onclick=" window.open('https://wa.me/{{ $order->no_hp }}?text=Selamat ','_blank')"
+                                    onclick=" window.open('https://wa.me/{{ $post->order->no_hp }}?text=Selamat ','_blank')"
                                     class="btn btn-sm btn-primary"
                                 >
                                     <div class="d-flex">
@@ -83,33 +64,23 @@
                                         <span class="align-self-center">Hubungi Client</span>
                                     </div>
                                 </button>
-                                <button type="button" class="btn btn-sm btn-info">
-                                    <div class="d-flex">
-                                        <span class="material-symbols-rounded me-1" style="font-size: 20px">post_add</span>
-                                        <span class="align-self-center">Post Undangan</span>
-                                    </div>
-                                </button>
-                                <button type="button" class="d-none btn btn-sm btn-warning">
+                                
+                                <button type="button" class="btn btn-sm btn-warning">
                                     <div class="d-flex">
                                         <span class="material-symbols-rounded me-1" style="font-size: 20px">edit_square</span>
                                         <span class="align-self-center">Edit Undangan</span>
                                     </div>
                                 </button>
                                 <br>
-                                <button type="button" onclick="setOrderId('{{ $order->uuid }}')" class="btn btn-sm btn-success mt-1" data-bs-toggle="modal" data-bs-target="#modalLunas">
-                                    <div class="d-flex">
-                                        <span class="material-symbols-rounded me-1" style="font-size:20px">check_circle</span>
-                                        <span class="align-self-center">Lunas</span>
-                                    </div>
-                                </button>
-                                <form action="/admin/orders/{{ $order->uuid }}" method="post" class="d-inline">
+                                
+                                <form action="/admin/invitations/{{ $post->slug }}" method="post" class="d-inline">
                                     @csrf
                                     @method('put')
                                     <input type="hidden" name="req" value="pembatalan">
-                                    <button type="submit" class="btn btn-sm btn-danger mt-1" onclick="return confirm('Yakin Membatalkan Data Order Ini?')">
+                                    <button type="submit" class="btn btn-sm btn-danger mt-1" onclick="return confirm('Yakin Menghapus assets Data Undangan Ini?\nSemua assets akan di gantikan dengan sample default.')">
                                         <div class="d-flex">
-                                            <span class="material-symbols-rounded me-1" style="font-size:20px">cancel</span>
-                                            <span class="align-self-center">Batal</span>
+                                            <span class="material-symbols-rounded me-1" style="font-size:20px">delete</span>
+                                            <span class="align-self-center">Hapus Asets Data</span>
                                         </div>
                                     </button>
                                 </form>
@@ -118,13 +89,16 @@
                         @endforeach
                     @else
                         <tr>
-                            <td scope="row" colspan="5" class="text-center">Data Order Tidak Ditemukan..</td>
+                            <td scope="row" colspan="7" class="text-center">Data Undangan Tidak Ditemukan..</td>
                         </tr>
                     @endif
                     </tbody>
                 </table>
                 <div class="mt-2">
-                    {{ $orders->links('vendor.pagination.bootstrap-5') }}
+                    {{ $posts->links('vendor.pagination.bootstrap-5') }}
                 </div>
             </div>
+        </div>
+    </div>
+</div>
 @endsection

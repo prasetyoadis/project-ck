@@ -15,6 +15,24 @@ class Theme extends Model
         return 'slug';
     }
     
+    public function scopeFilter($query, array $filters){
+        $query->when($filters['search'] ?? false, function($query, $s){
+            return $query->where(function($query) use ($s) {
+                $query->where('nama_tema', 'like', '%' . $s . '%');
+            });
+        });
+        $query->when((isset($filters['category']) ? $filters['category'] : false), function($query, $c){
+            return $query->whereHas('category', function($query) use ($c){
+                $query->where('slug', $c); 
+            });
+        });
+        $query->when((isset($filters['tag']) ? $filters['tag'] : false), function($query, $t){
+            return $query->whereHas('tags', function($query) use ($t){
+                $query->where('slug', $t); 
+            });
+        });
+    }
+
     public function undangan() {
         return $this->hasOne(Undangan::class);
     }
