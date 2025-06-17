@@ -16,8 +16,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        //
-        //set limit value from request or default is 5
+        # Set limit value from request or default is 5.
         $limit = $request->input('limit', 5);
         
         return view('dashboard.admin.orders.index',[
@@ -32,7 +31,6 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
         return view('dashboard.admin.orders.create', [
             "title" => "Create Order",
         ]);
@@ -43,7 +41,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //Validasi Data Input
+        # Validasi form input.
         $dataValid = $request->validate([
             'uuid' => 'required|unique:orders',
             'nama' => 'required|min:3',
@@ -52,76 +50,113 @@ class OrderController extends Controller
             'tgl_order' => 'required',
             'bukti_bayar' => 'required|image|file|max:2042|mimes:jpeg,png',
         ]);
-        //Jika Terdapat Request file foto
-        if ($request->file('bukti_bayar')) {
-            //Menyimpan Data File foto Pada Directory Public Web dan Isi dataValid dengan Path Lokasi Gambar
-            // $dataPayment['bukti_bayar'] = Storage::disk('public-web')->put('img/payments', $request->file('bukti_bayar'));
+        # Set input file ke dalam var foto.
+        $foto = $request->file('bukti_bayar');
+
+        # Kalau ada input file foto.
+        if ($foto) {
+            # Menyimpan Data File foto Pada Directory Public Web dan Isi dataValid dengan Path Lokasi Gambar
+            
             /**
-             * Jika Mau di upload di hosting bisa pakai
+             * Cara 1.
+             * Menggunakan fitur laravel Storage::disk()->put().
+             * 
+             * @param use Illuminate\Support\Facades\Storage;
+             */
+            # $dataPayment['bukti_bayar'] = Storage::disk('public-web')->put('img/payments', $request->file('bukti_bayar'));
+            
+            /**
+             * Cara 2.
+             * Mengunakan fitur php move(), jika ingin project dihosting.
              *
              * @param use Illuminate\Support\Str;
-             *
              */
-             $foto = $request->file('bukti_bayar');
-             $foto_nama = Str::random(40). '.'. $request->file('bukti_bayar')->getClientOriginalExtension();
-             $dataPayment['bukti_bayar'] = 'img/payments/'. $foto_nama;
-             $foto->move('img/payments/', $foto_nama);
+
+            # Set nama dari foto yang diupload.
+            $foto_nama = Str::random(40). '.'. $foto->getClientOriginalExtension();
+            # Simpan slug foto ke dataPayment->bukti_bayar.
+            $dataPayment['bukti_bayar'] = 'img/payments/'. $foto_nama;
+            # Proses penyimpanan.
+            $foto->move('img/payments/', $foto_nama);
         }
-        
+        # Set data user_id dan status dalam var dataValid.
         $dataValid['user_id'] = auth()->user()->id;
         $dataValid['status'] = "dp";
+        # Menghapus array object 'bukti_bayar' dalam var dataValid.
         unset($dataValid['bukti_bayar']);
         
-        //Menyimpan dataValid Ke Model User
+        # Menyimpan dataValid ke model User.
         Order::create($dataValid);
+        # Set data order yang baru dibuat kedalam var order.
         $order = Order::firstWhere('uuid', $request->uuid);
 
+        # Set data order_id dan tgl_bayar dalam var dataPayment.
         $dataPayment['order_id'] = $order->id;
         $dataPayment['tgl_bayar'] = $dataValid['tgl_order'];
+        
+        # Menyimpan dataPaymen ke model Payment.
         Payment::create($dataPayment);
         
-        //Redirect Halaman Admin Menu Orders
+        # Mengalihkan ke halaman admin menu orders dengan success massage.
         return redirect('/admin/orders')->with('success', 'Data Order Berhasil Ditambahkan');
     }
 
     public function update(Request $request, Order $order)
     {
-        //
+        # Mengalihkan proses berdasarkan $request->req.
         switch ($request->req) {
             case 'pelunasan':
+                # Validasi form input.
                 $dataPayment = $request->validate([
                     'tgl_bayar' => 'required',
                     'bukti_bayar' => 'required|image|file|max:2042',
                 ]);
         
-        
+                # Kalau ada input file foto.
                 if ($request->file('bukti_bayar')) {
-                    //Menyimpan Data File foto Pada Directory Public Web dan Isi dataValid dengan Path Lokasi Gambar
-                    $dataPayment['bukti_bayar'] = Storage::disk('public-web')->put('img/payments', $request->file('bukti_bayar'));
+                    # Menyimpan Data File foto Pada Directory Public Web dan Isi dataValid dengan Path Lokasi Gambar
+            
                     /**
-                     * Jika Mau di upload di hosting bisa pakai
+                     * Cara 1.
+                     * Menggunakan fitur laravel Storage::disk()->put().
+                     * 
+                     * @param use Illuminate\Support\Facades\Storage;
+                     */
+                    # $dataPayment['bukti_bayar'] = Storage::disk('public-web')->put('img/payments', $request->file('bukti_bayar'));
+                    
+                    /**
+                     * Cara 2.
+                     * Mengunakan fitur php move(), jika ingin project dihosting.
                      *
                      * @param use Illuminate\Support\Str;
-                     *
-                     * $foto = $request->file('foto');
-                     * $foto_nama =  $gambar_nama =  Str::random(40). '.'. $request->file('foto')->getClientOriginalExtension();
-                     * $dataValid['foto'] = 'img/users/'. $foto_nama;
-                     * $foto->move('img/users', $foto_nama);
                      */
+
+                    # Set input file ke dalam var foto.
+                    $foto = $request->file('bukti_bayar');
+                    # Set nama dari foto yang diupload.
+                    $foto_nama = Str::random(40). '.'. $foto->getClientOriginalExtension();
+                    # Simpan slug foto ke dataPayment->bukti_bayar.
+                    $dataPayment['bukti_bayar'] = 'img/payments/'. $foto_nama;
+                    # Proses penyimpanan.
+                    $foto->move('img/payments/', $foto_nama);
                 }
                 $dataPayment['order_id'] = $order->id;
                
-                //Menyimpan data pelunasan payment
+                # Menyimpan dataPayment ke model Payment.
                 Payment::create($dataPayment);
-                //Mengupdate status Order
+                
+                # Update data status model Order dengan lunas.
                 Order::where('id', $order->id)->update(['status' => 'lunas']);
         
-                //Redirect Halaman Admin Menu Order dengan pesan success
+                # Mengalihkan ke halaman admin menu order dengan success message.
                 return redirect('/admin/orders')->with('success', 'Orders Telah Lunas');
                 break;
             case 'pembatalan':
                 return $order;
+                # Update data status model Order dengan batal.
                 Order::where('id', $order->id)->update(['status' => 'batal']);
+
+                # Mengalihkan ke halaman admin menu order dengan success message.
                 return redirect('/admin/orders')->with('success', 'Orders Telah Dibatalkan');
                 break;
         }

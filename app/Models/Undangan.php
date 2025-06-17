@@ -19,8 +19,8 @@ class Undangan extends Model
     public function scopeFilter($query, array $filters){
         $query->when($filters['search'] ?? false, function($query, $s){
             return $query->where(function($query) use ($s) {
-                $query->where('uuid', 'like', '%' . $s . '%')
-                      ->orWhere('nama', 'like', '%' . $s . '%');
+                $query->whereRelation('uuid', 'like', '%' . $s . '%')
+                      ->orWhere('slug', 'like', '%' . $s . '%');
             });
         });
     }
