@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Song;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -14,8 +15,7 @@ class SongController extends Controller
      */
     public function index(Request $request)
     {
-        //
-        //set limit value from request or default is 5
+        # Set limit value from request or default is 5.
         $limit = $request->input('limit', 5);
 
         return view('dashboard.admin.songs.index', [
@@ -30,7 +30,6 @@ class SongController extends Controller
      */
     public function create()
     {
-        //
         return view('dashboard.admin.songs.create', [
             "title" => "Create Song",
         ]);
@@ -41,32 +40,47 @@ class SongController extends Controller
      */
     public function store(Request $request)
     {
-        //Validasi Data Input
+        # Validasi form input.
         $dataValid = $request->validate([
             'nama_lagu' => 'required',
             'slug' => 'required|file|max:5120|mimes:mp3',
         ]);
+        # set data dataValid 'uuid' dengan uniqid().
         $dataValid['uuid'] = uniqid();
-        //Jika Terdapat Request file foto
+
+        # Jika terdapat input file lagu.
         if ($request->file('slug')) {
-            //Menyimpan Data File foto Pada Directory Public Web dan Isi dataValid dengan Path Lokasi Gambar
-            $dataValid['slug'] = Storage::disk('public-web')->put('media/audio', $request->file('slug'));
+            # Menyimpan Data File lagu Pada Directory Public Web dan Isi dataValid dengan Path Lokasi Gambar
+            
             /**
-             * Jika Mau di upload di hosting bisa pakai
+             * Cara 1.
+             * Menggunakan fitur laravel Storage::disk()->put().
+             * 
+             * @param use Illuminate\Support\Facades\Storage;
+             */
+            # $dataValid['slug'] = Storage::disk('public-web')->put('media/audio', $request->file('slug'));
+            
+            /**
+             * Cara 2.
+             * Mengunakan fitur php move(), jika ingin project dihosting.
              *
              * @param use Illuminate\Support\Str;
-             *
-             * $foto = $request->file('foto');
-             * $foto_nama =  $gambar_nama =  Str::random(40). '.'. $request->file('foto')->getClientOriginalExtension();
-             * $dataValid['foto'] = 'img/users/'. $foto_nama;
-             * $foto->move('img/users', $foto_nama);
              */
+
+            # Set input file ke dalam var lagu.
+            $lagu = $request->file('slug');
+            # Set nama dari lagu yang diupload.
+            $lagu_nama = Str::random(40). '.'. $lagu->getClientOriginalExtension();
+            # Simpan slug lagu ke dataValid->slug.
+            $dataValid['slug'] = 'media/audio/'. $lagu_nama;
+            # Proses penyimpanan.
+            $lagu->move('media/audio/', $lagu_nama);
         }
         
-        //Menyimpan dataValid Ke Model User
+        # Menyimpan dataValid ke model User.
         Song::create($dataValid);
         
-        //Redirect Halaman Admin Menu Orders
+        # mengalihkan ke halaman admin menu orders dengan success message.
         return redirect('/admin/songs')->with('success', 'Data Song Berhasil Ditambahkan');
     }
 
@@ -84,7 +98,6 @@ class SongController extends Controller
      */
     public function edit(Song $song)
     {
-        //
         return view('dashboard.admin.songs.edit', [
             "title" => "Edit Song", 
             "song" => $song, 
@@ -96,36 +109,53 @@ class SongController extends Controller
      */
     public function update(Request $request, Song $song)
     {
-        //
+        # Set rules of validation.
         $rules = [
             'nama_lagu' => 'required',
         ];
+        # set rules jika ada input file mp3.
         if ($request->file('slug')) $rules['slug'] = 'required|file|max:5120|mimes:mp3';
 
+        # Validasi form input dengan rules.
         $validator = Validator::make($request->all(), $rules);
-
-        // Retrieve the validated input
+        # Retrieve the validated input to dataValid
         $dataValid = $validator->validated();
 
+        # Kalau ada input file lagu.
         if ($request->file('slug')) {
-            //Hapus lagu yang ingin diganti
+            # Hapus lagu yang ingin diganti.
             Storage::disk('public-web')->delete($song->slug);
-            //Menyimpan Data File lagu Pada Directory Public Web dan Isi dataValid dengan Path Lokasi Gambar
-            $dataValid['slug'] = Storage::disk('public-web')->put('media/audio', $request->file('slug'));
+            # Menyimpan Data File lagu Pada Directory Public Web dan Isi dataValid dengan Path Lokasi Gambar
+            
             /**
-             * Jika Mau di upload di hosting bisa pakai
+             * Cara 1.
+             * Menggunakan fitur laravel Storage::disk()->put().
+             * 
+             * @param use Illuminate\Support\Facades\Storage;
+             */
+            # $dataValid['slug'] = Storage::disk('public-web')->put('media/audio', $request->file('slug'));
+            
+            /**
+             * Cara 2.
+             * Mengunakan fitur php move(), jika ingin project dihosting.
              *
              * @param use Illuminate\Support\Str;
-             *
-             * $lagu = $request->file('slug');
-             * $lagu_nama =  Str::random(40). '.'. $lagu->getClientOriginalExtension();
-             * $dataValid['slug'] = 'media/audio/'. $lagu_nama;
-             * $lagu->move('media/audio/', $lagu_nama);
              */
+
+            # Set input file ke dalam var lagu.
+            $lagu = $request->file('slug');
+            # Set nama dari lagu yang diupload.
+            $lagu_nama = Str::random(40). '.'. $lagu->getClientOriginalExtension();
+            # Simpan slug lagu ke dataValid->slug.
+            $dataValid['slug'] = 'media/audio/'. $lagu_nama;
+            # Proses penyimpanan.
+            $lagu->move('media/audio/', $lagu_nama);
         }
 
+        # Update data model song dengan dataValid.
         Song::where('id', $song->id)->update($dataValid);
 
+        # Mengalihkan ke halaman admin menu songs dengan success message.
         return redirect('/admin/songs')->with('success', 'Data Song Berhasil Diedit');
     }
 
@@ -134,11 +164,13 @@ class SongController extends Controller
      */
     public function destroy(Song $song)
     {
-        //
+        # Hapus lagu yang berkaitan dengan data yang akan dihapus.
         Storage::disk('public-web')->delete($song->slug);
 
+        # Delete data from model Song.
         Song::destroy($song->id);
 
+        # Mengalihkan ke halaman admin menu songs dengan success message.
         return redirect('/admin/songs')->with('success', 'Data Song Berhasil Dihapus');
     }
 

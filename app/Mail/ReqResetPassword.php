@@ -24,7 +24,7 @@ class ReqResetPassword extends Mailable
     public function __construct(
         public $user,
     ){
-        $this->data = $user->first();
+        $this->data = $user;
     }
 
     /**

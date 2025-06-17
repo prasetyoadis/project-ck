@@ -181,17 +181,25 @@ class PageController extends Controller
      * Display a listing of the backend page.
      */
     public function indexDashboard() {
-        
+        $unprogressOrders = Order::with('payment')->latest()->where('status', 'dp')->where('user_id', auth()->user()->id)->limit(5)->get();
+        $totalOrdersLunas = Order::with('payment')->where('status', 'lunas')->count();
+        $totalUndangan = Undangan::count();
+        $countNowOrderLunas = Order::with('payment')->where('created_at', 'like', '%' . date('Y-m-d') . '%')->where('status', 'lunas')->count();
+        $countNowOrderBatal = Order::with('payment')->where('created_at', 'like', '%' . date('Y-m-d') . '%')->where('status', 'batal')->count();
+        $countNowUndangan = Undangan::where('created_at', 'like', '%' . date('Y-m-d') . '%')->count();
+        $userDoneOrder = Order::with('payment')->where('status', 'lunas')->where('user_id', auth()->user()->id)->count();
+        $countNowUserDoneOrder = Order::with('payment')->where('created_at', 'like', '%' . date('Y-m-d') . '%')->where('status', 'lunas')->where('user_id', auth()->user()->id)->count();
+
         return view('dashboard.admin.index', [
             "title" => "Dashboard",
-            "unprogress_orders" => Order::with('payment')->latest()->where('status', 'dp')->where('user_id', auth()->user()->id)->limit(5)->get(),
-            "total_order_lunas" => Order::with('payment')->where('status', 'lunas')->count(),
-            "total_undangan" => Undangan::count(),
-            "penambahan_order_lunas" => Order::with('payment')->where('created_at', 'like', '%' . date('Y-m-d') . '%')->where('status', 'lunas')->count(),
-            "penurunan_order_batal" => Order::with('payment')->where('created_at', 'like', '%' . date('Y-m-d') . '%')->where('status', 'batal')->count(),
-            "penambahan_undangan" => Undangan::where('created_at', 'like', '%' . date('Y-m-d') . '%')->count(),
-            "order_profil_lunas" => Order::with('payment')->where('status', 'lunas')->where('user_id', auth()->user()->id)->count(),
-            "penambahan_order_profil_lunas" => Order::with('payment')->where('created_at', 'like', '%' . date('Y-m-d') . '%')->where('status', 'lunas')->where('user_id', auth()->user()->id)->count(),
+            "unprogress_orders" => $unprogressOrders,
+            "total_order_lunas" => $totalOrdersLunas,
+            "total_undangan" => $totalUndangan,
+            "penambahan_order_lunas" => $countNowOrderLunas,
+            "penurunan_order_batal" => $countNowOrderBatal,
+            "penambahan_undangan" => $countNowUndangan,
+            "order_profil_lunas" => $userDoneOrder,
+            "penambahan_order_profil_lunas" => $countNowUserDoneOrder,
         ]);
     }
 

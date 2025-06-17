@@ -27,7 +27,6 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        // return $user;
         return view('dashboard.profile-edit', [
             "title" => "Edit My Profile",
             "user" => $user

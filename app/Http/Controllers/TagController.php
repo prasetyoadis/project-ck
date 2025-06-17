@@ -12,8 +12,7 @@ class TagController extends Controller
      */
     public function index(Request $request)
     {
-        //
-        //set limit value from request or default is 5
+        # Set limit value from request or default is 5.
         $limit = $request->input('limit', 5);
 
         return view('dashboard.admin.tags.index', [
@@ -25,12 +24,18 @@ class TagController extends Controller
 
     public function getTags(Request $request)
     {
-        //
+        # Buat var tags type of array.
         $tags=[];
-        if ($search=$request->nama_tag) {
+        # Set var search dengan data input 'nama_tag'.
+        $search = $request->nama_tag;
+
+        # Kalau search is not empty.
+        if ($search) {
+            # Set array tags dengan data model Tags dimana 'nama_tag' seperti search.
             $tags = Tag::where('nama_tag', 'LIKE', "%$search%")->get();
         }
-        
+
+        # return json responses dengan array tags.
         return response()->json($tags);
     }
 
@@ -39,7 +44,6 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
         return view('dashboard.admin.tags.create', [
             "title" => "Create Tag Theme",
         ]);
@@ -50,14 +54,16 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        # Validasi form input.
         $dataValid = $request->validate([
             'nama_tag' => 'required|min:3|max:255',
             'slug' => 'required|min:3|max:255|unique:tags',
         ]);
 
+        # Menyimpan dataValid ke model Tag.
         Tag::create($dataValid);
-
+        
+        # Mengalihkan ke halaman admin menu tag-thames dengan success massage.
         return redirect('/admin/tag-themes')->with('success', 'Data Tag Berhasil Ditambahkan');
     }
 
@@ -66,7 +72,6 @@ class TagController extends Controller
      */
     public function edit(Tag $tag)
     {
-        //
         return view('dashboard.admin.tags.edit', [
             "title" => "Edit Tag Theme",
             "tag" => $tag,
@@ -78,17 +83,18 @@ class TagController extends Controller
      */
     public function update(Request $request, Tag $tag)
     {
-        //make rules when slug is diferent
+        # Make rules when slug is diferent
         if ($request->slug != $tag->slug) {
             $dataRules['nama_tag'] = 'required|min:3|max:255';
             $dataRules['slug'] = 'required|min:3|max:255|unique:tags';
         }
-
-        //Validasi Data dengan dataRules
+        # Validasi form input dengan dataRules.
         $dataValid = $request->validate($dataRules);
 
+        # Update data model Tag dengan dataValid.
         Tag::where('id', $tag->id)->update($dataValid);
 
+        # Mengalihkan ke halaman admin menu tag-thames dengan success massage.
         return redirect('/admin/tag-themes')->with('success', 'Data Tag Berhasil Diedit');
     }
 
@@ -97,9 +103,10 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        # Delete data from model Tag.
         Tag::destroy($tag->id);
 
+        # Mengalihkan ke halaman admin menu tag-thames dengan success massage.
         return redirect('/admin/tag-themes')->with('success', 'Data Tag Berhasil Dihapus');
     }
 }

@@ -132,11 +132,11 @@
                                     </div>
                                 </div>
                             @endif
-                            @if (session()->has('error'))
+                            @if (session()->has('fail'))
                                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                     <div class="d-flex align-items-center">
                                         <span class="material-symbols-rounded me-2">warning</span>
-                                        <span class="align-middle"><strong> Error: </strong> {{ session('error') }}</span>
+                                        <span class="align-middle"><strong> Error: </strong> {{ session('fail') }}</span>
                                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                     </div>
                                 </div>
