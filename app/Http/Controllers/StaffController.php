@@ -21,14 +21,20 @@ class StaffController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         $now = date('Hi');
         $greeting = " ";
-        if (($now >= "0000") && ($now <= "0400")) { $greeting = "Malam"; }
-        elseif (($now >= "0401") && ($now <= "1100")) { $greeting = "Pagi"; }
-        elseif (($now >= "1101") && ($now <= "1500")) { $greeting = "Siang";}
-        elseif (($now >= "1501") && ($now <= "1830")) { $greeting = "Sore";}
-        elseif (($now >= "1831")) { $greeting = "Malam";} 
-        
+        if (($now >= "0000") && ($now <= "0400")) {
+            $greeting = "Malam";
+        } elseif (($now >= "0401") && ($now <= "1100")) {
+            $greeting = "Pagi";
+        } elseif (($now >= "1101") && ($now <= "1500")) {
+            $greeting = "Siang";
+        } elseif (($now >= "1501") && ($now <= "1830")) {
+            $greeting = "Sore";
+        } elseif (($now >= "1831")) {
+            $greeting = "Malam";
+        }
+
         return view('dashboard.admin.staff.index', [
-            "title" => "Staff Admin",
+            "title" => "Users",
             "users" => User::latest()->where('role', 'staff')->paginate(5)->appends(request()->all()),
             "salam" => $greeting
         ]);
@@ -40,8 +46,8 @@ class StaffController extends Controller
     public function create()
     {
         //
-        return view('dashboard.admin.staff.create',[
-            "title" => "Add New Staff"
+        return view('dashboard.admin.staff.create', [
+            "title" => "Add User"
         ]);
     }
 
@@ -61,7 +67,7 @@ class StaffController extends Controller
             'role' => 'required|not_in:"-- Pilih Jabatan --"',
         ]);
         $dataValid['password'] = Hash::make($request->password);
-        $dataValid['foto'] = ($request->gender=='l') ? "img/users/default_profile_male.png" : "img/users/default_profile_female.png";
+        $dataValid['foto'] = ($request->gender == 'l') ? "img/users/default_profile_male.png" : "img/users/default_profile_female.png";
         $dataValid['isactive'] = "1";
 
         $user = User::create($dataValid);
@@ -80,7 +86,7 @@ class StaffController extends Controller
      */
     public function edit(User $user)
     {
-        return view('dashboard.admin.staff.edit',[
+        return view('dashboard.admin.staff.edit', [
             "title" => "Edit Data Staff",
             "user" => $user
         ]);
@@ -106,7 +112,7 @@ class StaffController extends Controller
                 //Validasi Data dengan dataRules
                 $dataValid = $request->validate($dataRules);
 
-                if($request->email != $user->email){
+                if ($request->email != $user->email) {
                     $dataValid['email_verified_at'] = null;
                 }
                 //Update Dengan dataValid Pada Model User Berdasarkan id User
@@ -114,7 +120,7 @@ class StaffController extends Controller
 
                 $userUpdate = User::where('id', $user->id)->get();
 
-                if($request->email != $user->email){
+                if ($request->email != $user->email) {
                     if ($status) {
                         event(new ReverifyEmail($userUpdate[0]));
                     }
@@ -124,18 +130,18 @@ class StaffController extends Controller
                 break;
 
             case 'resetPass':
-                $randPass = substr(str_shuffle('!@#$%^&*()-_+=<>?abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=<>?'), 0,10);
+                $randPass = substr(str_shuffle('!@#$%^&*()-_+=<>?abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=<>?'), 0, 10);
                 $hashPass = Hash::make($randPass);
-                
+
                 $status = User::where('id', $user->id)->update(['password' => $hashPass, 'isreqreset' => '0']);
-                
+
                 if ($status) {
                     # code...
                     $user['pass'] = $randPass;
                     $user['admin'] = auth()->user()->name;
-                    
+
                     $user->notify(new PasswordResetEmail($user));
-                    
+
                     return redirect('/admin/staff')->with('success', 'Password Staff Telah Direset! Notifikasi Email Telah Dikirim.');
                 } else {
                     # code...
@@ -144,7 +150,7 @@ class StaffController extends Controller
                 break;
 
             case 'status':
-                User::where('id', $user->id)->update(['isactive' => ($user->isactive==='0') ? '1' : '0']);
+                User::where('id', $user->id)->update(['isactive' => ($user->isactive === '0') ? '1' : '0']);
                 //Redirect Halaman Admin Menu Staff
                 return redirect('/admin/staff')->with('success', 'Status Staff Telah Diubah');
                 break;
