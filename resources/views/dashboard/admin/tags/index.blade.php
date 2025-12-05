@@ -70,7 +70,7 @@
                                                         <span class="align-self-center">Edit Data</span>
                                                     </div>
                                                 </a>
-                                                <form action="/admin/tags/{{ $tag->slug }}" method="post" class="d-inline">
+                                                <form action="/admin/tag-themes/{{ $tag->slug }}" method="post" class="d-inline">
                                                     @csrf
                                                     @method('delete')
                                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin Membatalkan Data Tag Ini?\nPastikan data tag ini tidak berelasi dengan tema manapun.')">

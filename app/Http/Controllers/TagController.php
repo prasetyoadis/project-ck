@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Tag\StoreTagRequest;
+use App\Http\Requests\Tag\UpdateTagRequest;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
@@ -14,10 +16,12 @@ class TagController extends Controller
     {
         # Set limit value from request or default is 5.
         $limit = $request->input('limit', 5);
+        # Query Select model Tag data terbaru dengan filter search dan paginate limit.
+        $tags = Tag::filter(request(['search']))->latest()->paginate($limit)->appends(request()->all());
 
         return view('dashboard.admin.tags.index', [
             "title" => "Tag Themes",
-            "tags" => Tag::filter(request(['search']))->latest()->paginate($limit)->appends(request()->all()),
+            "tags" => $tags,
             "limit" => $limit,
         ]);
     }
@@ -52,13 +56,10 @@ class TagController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTagRequest $request)
     {
-        # Validasi form input.
-        $dataValid = $request->validate([
-            'nama_tag' => 'required|min:3|max:255',
-            'slug' => 'required|min:3|max:255|unique:tags',
-        ]);
+        # Validasi form input dengan StoreTagRequest.
+        $dataValid = $request->validated();
 
         # Menyimpan dataValid ke model Tag.
         Tag::create($dataValid);
@@ -81,15 +82,10 @@ class TagController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tag $tag)
+    public function update(UpdateTagRequest $request, Tag $tag)
     {
-        # Make rules when slug is diferent
-        if ($request->slug != $tag->slug) {
-            $dataRules['nama_tag'] = 'required|min:3|max:255';
-            $dataRules['slug'] = 'required|min:3|max:255|unique:tags';
-        }
-        # Validasi form input dengan dataRules.
-        $dataValid = $request->validate($dataRules);
+        # Validasi form input dengan UpdateTagRequest.
+        $dataValid = $request->validated();
 
         # Update data model Tag dengan dataValid.
         Tag::where('id', $tag->id)->update($dataValid);
