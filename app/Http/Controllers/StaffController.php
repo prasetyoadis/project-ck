@@ -15,9 +15,9 @@ class StaffController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        # Set greeting sesuai dengan waktu sekarang.
         date_default_timezone_set('Asia/Jakarta');
         $now = date('Hi');
         $greeting = " ";
@@ -26,11 +26,15 @@ class StaffController extends Controller
         elseif (($now >= "1101") && ($now <= "1500")) { $greeting = "Siang";}
         elseif (($now >= "1501") && ($now <= "1830")) { $greeting = "Sore";}
         elseif (($now >= "1831")) { $greeting = "Malam";} 
+
+        # Set limit value from request or default is 5.
+        $limit = $request->input('limit', 5);
         
         return view('dashboard.admin.staff.index', [
             "title" => "Staff Admin",
-            "users" => User::latest()->where('role', 'staff')->paginate(5)->appends(request()->all()),
-            "salam" => $greeting
+            "users" => User::latest()->where('role', 'staff')->paginate($limit)->appends(request()->all()),
+            "salam" => $greeting,
+            "limit" => $limit,
         ]);
     }
 
@@ -39,7 +43,6 @@ class StaffController extends Controller
      */
     public function create()
     {
-        //
         return view('dashboard.admin.staff.create',[
             "title" => "Add New Staff"
         ]);
@@ -50,7 +53,7 @@ class StaffController extends Controller
      */
     public function store(Request $request)
     {
-        //Validasi Data Input
+        # Validasi form input.
         $dataValid = $request->validate([
             'username' => 'required|unique:users',
             'password' => 'required',
@@ -60,18 +63,22 @@ class StaffController extends Controller
             'gender' => 'required',
             'role' => 'required|not_in:"-- Pilih Jabatan --"',
         ]);
+        # set data dataValid 'password' dengan eksripsi input 'password', 'foto' dengan default sesuai gender, dan 'isactive' dengan default 1 true.
         $dataValid['password'] = Hash::make($request->password);
         $dataValid['foto'] = ($request->gender=='l') ? "img/users/default_profile_male.png" : "img/users/default_profile_female.png";
         $dataValid['isactive'] = "1";
 
+        # Menyimpan dataValid ke model User.
         $user = User::create($dataValid);
 
+        # set data user 'pass' dengan password sebelum di enkripsi, dan 'admin' dengan nama user yang sedang login.
         $user['pass'] = $request->password;
         $user['admin'] = auth()->user()->name;
 
+        # Menjalankan event baru Registered dengan membawa data user.
         event(new Registered($user));
 
-        //Redirect Halaman Admin Menu Staff
+        # Mengalihkan ke halaman admin menu staff dengan success massage.
         return redirect('/admin/staff')->with('success', 'Data Staff Baru Berhasil Ditambahkan');
     }
 
@@ -91,61 +98,79 @@ class StaffController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        # Mengalihkan proses berdasarkan $request->req.
         switch ($request->req) {
             case 'edit':
-                //Data Rules for Input Request
+                # Make data rules for input request.
                 $dataRules = [
                     'name' => 'required|min:3',
                     'email' => 'required|email',
                     'no_hp' => 'required|min:9|max:15',
                     'gender' => 'required',
                 ];
-                $idUser = $user->id;
-                //Jika Request Role Tidak Sama Dengan Data Role User Isi Rule Data Role
+                # Jika input role tidak sama dengan data role user set dataRules.
                 if ($request->role != $user->role) $dataRules['role'] = 'required|not_in:"-- Pilih Jabatan --"';
-                //Validasi Data dengan dataRules
+                # Validasi Data dengan dataRules
                 $dataValid = $request->validate($dataRules);
 
+                # Kalau input email tidak sama dengan data email user.
                 if($request->email != $user->email){
+                    # set dataValid 'email_verified_at' dengan null.
                     $dataValid['email_verified_at'] = null;
                 }
-                //Update Dengan dataValid Pada Model User Berdasarkan id User
+                
+                # Update model User dengan dataValid berdasarkan user->id.
                 $status = User::where('id', $user->id)->update($dataValid);
 
-                $userUpdate = User::where('id', $user->id)->get();
+                # Set userUpdate dengan data user yang baru.
+                $userUpdate = User::firstWhere('id', $user->id);
 
+                # Kalau input email tidak sama dengan data email user.
                 if($request->email != $user->email){
+                    # Kalau status update berhasil.
                     if ($status) {
-                        event(new ReverifyEmail($userUpdate[0]));
+                        # Menjalankan event baru ReverifyEmail dengan membawa data userUpdate.
+                        event(new ReverifyEmail($userUpdate));
                     }
                 }
-                //Redirect Halaman Admin Menu Staff
+                
+                # Mengalihkan ke halaman admin menu staff dengan success massage.
                 return redirect('/admin/staff')->with('success', 'Data Staff Berhasil Diperbaharui');
                 break;
 
             case 'resetPass':
+                # Set randPass dengan string random dengan panjang 10 huruf, kemudian enkripsi randPass dan simpan di hashPass.
                 $randPass = substr(str_shuffle('!@#$%^&*()-_+=<>?abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_+=<>?'), 0,10);
                 $hashPass = Hash::make($randPass);
                 
+                # Update data password, dan isrequest model User dengan hasPass, dan 0/false.
                 $status = User::where('id', $user->id)->update(['password' => $hashPass, 'isreqreset' => '0']);
                 
+                # Kalau update berhasil.
                 if ($status) {
-                    # code...
+                    # set data user 'pass' dengan randPass, dan 'admin' dengan nama user yang sedang login.
                     $user['pass'] = $randPass;
                     $user['admin'] = auth()->user()->name;
                     
+                    # Kirim notify user PasswordResetEmail dengan membawa data user.
                     $user->notify(new PasswordResetEmail($user));
                     
+                    # Mengalihkan ke halaman admin menu staff dengan success massage.
                     return redirect('/admin/staff')->with('success', 'Password Staff Telah Direset! Notifikasi Email Telah Dikirim.');
                 } else {
-                    # code...
+                    # Mengalihkan ke halaman admin menu staff dengan fail massage.
                     return redirect('/admin/staff')->with('fail', 'Password Staff Gagal Direset!');
                 }
                 break;
 
             case 'status':
-                User::where('id', $user->id)->update(['isactive' => ($user->isactive==='0') ? '1' : '0']);
-                //Redirect Halaman Admin Menu Staff
+                # set status dengan kondisi jika isactive data user adalah 0 maka isi 1 jika tidak isi 2.
+                $status = ($user->isactive == '0') ? '1' : '0';
+                
+                # Update data isactive model User dengan status.
+                User::where('id', $user->id)->update(['isactive' => $status]);
+                
+                # Mengalihkan ke halaman admin menu staff dengan success massage.
                 return redirect('/admin/staff')->with('success', 'Status Staff Telah Diubah');
                 break;
         }

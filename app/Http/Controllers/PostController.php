@@ -22,8 +22,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        //
-        //set limit value from request or default is 5
+        # Set limit value from request or default is 5.
         $limit = $request->input('limit', 5);
         
         return view('dashboard.admin.posts.index',[
@@ -107,7 +106,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        # Validasi form input.
         $dataValid = $request->validate([
             'uuid' => 'required',
             'slug' => 'required|min:3',
@@ -120,29 +119,34 @@ class PostController extends Controller
             'theme_id' => 'required|not_in:"-- Pilih Tema --"',
             'song_id' => 'required|not_in:"-- Pilih Lagu --"',
         ]);
-
-        $order = Order::where('uuid', $request->uuid)->first();
+        # Set data order yang sesuai request uuid kedalam var order.
+        $order = Order::firstWhere('uuid', $request->uuid);
         
+        # Set data order_id, slug, theme_id dan song_id dalam var dataUndangan.
         $dataUndangan['order_id'] = $order->id;
         $dataUndangan['slug'] = $request->slug;
         $dataUndangan['theme_id'] = $request->theme_id;
         $dataUndangan['song_id'] = $request->song_id;
 
         // return $dataUndangan;
-
+        # Menghapus array object "bukti_bayar" dalam var dataValid.
         unset($dataValid['song_id']);
         unset($dataValid['theme_id']);
         unset($dataValid['slug']);
         unset($dataValid['uuid']);
         
         // return $dataValid;
-        
+        # Menyimpan dataValid ke model Couple.
         Couple::create($dataValid);
+        # Set data couple yang baru dibuat kedalam var couple.
         $couple = Couple::where('nama_pria', $request->nama_pria)->where('nama_wanita', $request->nama_wanita)->first();
         
+        # Set data couple_id dengan couple->id.
         $dataUndangan['couple_id'] = $couple->id;
+        # Menyimpan dataUndangan ke model Undangan.
         Undangan::create($dataUndangan);
 
+        # Mengalihkan ke halaman admin menu invitations/create dengan oid = request->uuid dan uid = request->slug serta success massage dan step 2.
         return redirect('/admin/invitations/create?oid='.$request->uuid.'&uid='.$request->slug)->with('success', 'Undangan Berhasil Dibuat')->with('step', '2');
     }
 
