@@ -70,7 +70,7 @@
                                                         <span class="align-self-center">Edit Data</span>
                                                     </div>
                                                 </a>
-                                                <form action="/admin/categories/{{ $category->slug }}" method="post" class="d-inline">
+                                                <form action="/admin/category-themes/{{ $category->slug }}" method="post" class="d-inline">
                                                     @csrf
                                                     @method('delete')
                                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin Menghapus Data Category Ini?\nPastikan data category ini tidak berelasi dengan tema manapun.')">
