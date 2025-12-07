@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Category;
+namespace App\Http\Requests\Bank;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCategoryRequest extends FormRequest
+class UpdateBankRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,19 +21,19 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        # Get model Category from route.
-        $category = $this->route('category');
+        # Get model Bank from route.
+        $bank = $this->route('bank');
         
         return [
-            'nama_category' => 'required|min:3|max:255',
-            'slug' => [
+            //
+            'req' => 'required',
+            'code' => [
                 'required',
-                'min:3',
-                'max:255',
-                # Make sure slug is unique diferent.
-                ($this->slug !== $category->slug) ? 'unique:categories' : '',
+                'integer',
+                # Make sure code is unique diferent.
+                ($this->code !== $bank->code) ? 'unique:banks' : ''
             ],
-        
+            'nama_bank' => 'required|min:3'
         ];
     }
 }

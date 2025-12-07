@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Bank\StoreBankRequest;
+use App\Http\Requests\Bank\UpdateBankRequest;
 use App\Models\Bank;
 use Illuminate\Http\Request;
 
@@ -9,21 +11,29 @@ class BankController extends Controller
 {
     /**
      * Display Halaman Bank Admin Dashboard.
+     * 
+     * @param $request -> input('limit') or ('search')
+     * 
+     * @return view banks.index with title, banks, limit
      */
     public function index(Request $request)
     {
         # Set limit value from request or default is 5.
         $limit = $request->input('limit', 5);
+        # Query Select data terbaru Bank dengan filter search dan paginate limit.
+        $banks = Bank::filter(request(['search']))->latest()->paginate($limit)->appends(request()->all());
 
         return view('dashboard.admin.banks.index', [
             "title" => "Data Banks",
-            "banks" => Bank::filter(request(['search']))->latest()->paginate($limit)->appends(request()->all()),
+            "banks" => $banks,
             "limit" => $limit,
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
+     * 
+     * @return view banks.create with title
      */
     public function create()
     {
@@ -34,15 +44,15 @@ class BankController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * 
+     * @param ..\Request\Tag\StoreBankRequest $request -> inputan form
+     * 
+     * @return redirect halaman banks with success massage
      */
-    public function store(Request $request)
+    public function store(StoreBankRequest $request)
     {
         # Validasi form input.
-        $dataValid = $request->validate([
-            'code' => 'required',
-            'nama_bank' => 'required|min:3',
-            'isactive' => 'required',
-        ]);
+        $dataValid = $request->validated();
 
         # Menyimpan data valid ke model Bank.
         Bank::create($dataValid);
@@ -53,6 +63,10 @@ class BankController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     * 
+     * @param ..\Models\Bank $bank -> data model dari Route
+     * 
+     * @return view banks.edit with title, bank
      */
     public function edit(Bank $bank)
     {
@@ -64,8 +78,13 @@ class BankController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * 
+     * @param ..\Request\Tag\UpdateBankRequest $request -> inputan form
+     *        ..\Models\Bank $bank -> data model dari Route
+     * 
+     * @return redirect halaman banks with success massage
      */
-    public function update(Request $request, Bank $bank)
+    public function update(UpdateBankRequest $request, Bank $bank)
     {
         # Mengalihkan proses berdasarkan $request->req.
         switch ($request->req) {
@@ -78,20 +97,19 @@ class BankController extends Controller
                 
                 # Kalau status merupakan 0 beri pesan success ".. dinonaktifkan", selain itu beri pesan success ".. aktifkan".
                 if ($status=='0') {
-                    # Mengalihkan ke halaman menu admin banks dengan success massage.
-                    return redirect('/admin/banks')->with('success', 'Bank Telah Dinonaktifkan');
+                    # Set massage.
+                    $massage = 'Bank Telah Dinonaktifkan';
                 } else {
-                    # Mengalihkan ke halaman menu admin banks dengan success massage.
-                    return redirect('/admin/banks')->with('success', 'Bank Telah Aktifkan');
+                    # Set massage.
+                    $massage = 'Bank Telah Aktifkan';
                 }
                 
+                # Mengalihkan ke halaman menu admin banks dengan success massage.
+                return redirect('/admin/banks')->with('success', $massage);
             break;
             case 'edit':
                 # Validasi form input.
-                $dataValid = $request->validate([
-                    'code' => 'required',
-                    'nama_bank' => 'required|min:3'
-                ]);
+                $dataValid = $request->validated();
                 
                 # Update model bank dengan dataValid.
                 Bank::where('id', $bank->id)->update($dataValid);

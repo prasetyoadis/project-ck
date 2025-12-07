@@ -10,13 +10,17 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display Halaman Category Admin Dashboard.
+     * 
+     * @param $request -> input('limit') or ('search')
+     * 
+     * @return view categories.index with title, categories, limit
      */
     public function index(Request $request)
     {
         # Set limit value from request or default is 5.
         $limit = $request->input('limit', 5);
-        # Query Select model Category data terbaru dengan filter search dan paginate limit.
+        # Query Select data terbaru Category dengan filter search dan paginate limit.
         $categories = Category::filter(request(['search']))->latest()->paginate($limit)->appends(request()->all());
         
         return view('dashboard.admin.categories.index', [
@@ -28,6 +32,8 @@ class CategoryController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * 
+     * @return view categories.create with title
      */
     public function create()
     {
@@ -38,6 +44,10 @@ class CategoryController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * 
+     * @param ..\Request\Tag\StoreCategoryRequest $request -> inputan form
+     * 
+     * @return redirect halaman category-themes with success massage
      */
     public function store(StoreCategoryRequest $request)
     {
@@ -53,6 +63,10 @@ class CategoryController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     * 
+     * @param ..\Models\Category $category -> data model dari Route
+     * 
+     * @return view categories.edit with title, category
      */
     public function edit(Category $category)
     {
@@ -64,6 +78,11 @@ class CategoryController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * 
+     * @param ..\Request\Tag\StoreCategoryRequest $request -> inputan form
+     *        ..\Models\Category $category -> data model dari Route
+     * 
+     * @return redirect halaman category-themes with success massage
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
@@ -79,6 +98,10 @@ class CategoryController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * 
+     * @param ..\Models\Category $category -> data model dari Route
+     * 
+     * @return redirect halaman category-themes with success massage
      */
     public function destroy(Category $category)
     {

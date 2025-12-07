@@ -11,12 +11,16 @@ class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * 
+     * @param $request -> input('limit') or ('search')
+     * 
+     * @return view tags.index with title, tags, limit
      */
     public function index(Request $request)
     {
         # Set limit value from request or default is 5.
         $limit = $request->input('limit', 5);
-        # Query Select model Tag data terbaru dengan filter search dan paginate limit.
+        # Query Select data terbaru Tag dengan filter search dan paginate limit.
         $tags = Tag::filter(request(['search']))->latest()->paginate($limit)->appends(request()->all());
 
         return view('dashboard.admin.tags.index', [
@@ -45,6 +49,8 @@ class TagController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * 
+     * @return view tags.create with title
      */
     public function create()
     {
@@ -55,6 +61,10 @@ class TagController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * 
+     * @param ..\Request\Tag\StoreTagRequest $request -> inputan form 
+     * 
+     * @return redirect halaman tag-themes with success massage
      */
     public function store(StoreTagRequest $request)
     {
@@ -70,6 +80,10 @@ class TagController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     * 
+     * @param ..\Models\Tag $tag -> data model dari Route
+     * 
+     * @return view tags.edit with title, tag
      */
     public function edit(Tag $tag)
     {
@@ -81,6 +95,11 @@ class TagController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * 
+     * @param ..\Request\Tag\UpdateTagRequest $request -> inputan form
+     *        ..\Models\Tag $tag -> data model dari Route
+     * 
+     * @return redirect halaman tag-themes with success massage
      */
     public function update(UpdateTagRequest $request, Tag $tag)
     {
@@ -96,6 +115,10 @@ class TagController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * 
+     * @param ..\Models\Tag $tag -> data model dari Route
+     * 
+     * @return redirect halaman tag-themes with success massage
      */
     public function destroy(Tag $tag)
     {

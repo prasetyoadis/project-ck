@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Tag;
+namespace App\Http\Requests\Bank;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateTagRequest extends FormRequest
+class StoreBankRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,19 +21,10 @@ class UpdateTagRequest extends FormRequest
      */
     public function rules(): array
     {
-        # Get model Tag from route.
-        $tag = $this->route('tag');
-        
         return [
-            'nama_tag' => 'required|min:3|max:255',
-            'slug' => [
-                'required',
-                'min:3',
-                'max:255',
-                # Make sure slug is unique diferent.
-                ($this->slug !== $tag->slug) ? 'unique:tags' : '',
-            ],
-        
+            'code' => 'required|integer|unique:banks',
+            'nama_bank' => 'required|min:3',
+            'isactive' => 'required',
         ];
     }
 }
